@@ -7,4 +7,10 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  server: {
+    proxy: {
+      '/api': 'https://deque-scanbot-backend-epn9.vercel.app',
+    },
+  },
+
 });
