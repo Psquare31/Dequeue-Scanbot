@@ -50,6 +50,7 @@ const App = () => {
       if (result && result.items.length > 0) {
         const barcode = result.items[0].barcode.text;
         setScanResult(barcode);
+        console.log(barcode);
         await fetchProductDetails(barcode);
       }
     } catch (error) {
