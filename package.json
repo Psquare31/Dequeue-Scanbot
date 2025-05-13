@@ -10,14 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.3.0",
     "@supabase/supabase-js": "^2.49.4",
     "@zxing/browser": "0.1.4",
     "@zxing/library": "^0.20.0",
     "framer-motion": "^11.0.5",
     "lucide-react": "^0.344.0",
     "mongoose": "^8.14.2",
+    "razorpay": "^2.9.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hot-toast": "^2.5.2",
     "react-webcam": "^7.2.0",
     "scanbot-web-sdk": "^7.1.0",
     "zustand": "^4.5.2"

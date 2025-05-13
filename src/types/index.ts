@@ -7,6 +7,33 @@ export interface Product {
   description?: string;
 }
 
+export interface RazorpayOrderResponse {
+  success: boolean;
+  data: {
+    id: string;
+    amount: number;
+    currency: string;
+  };
+}
+
+export interface RazorpayOrderData {
+  id: string;
+  amount: number;
+  currency: string;
+}
+
+
+export interface RazorpayVerifyResponse {
+  success: boolean;
+  message: string;
+}
+
+export interface RazorpayHandlerResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
 export interface CartItem extends Product {
   quantity: number;
 }

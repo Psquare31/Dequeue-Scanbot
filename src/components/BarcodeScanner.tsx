@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import ScanbotSDK from "scanbot-web-sdk/ui";
 import { motion } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
-import type { Product } from '../types';
+import type { Product, ScannerStatus } from '../types';
 
 
-const App = () => {
+const BarcodeScanner = () => {
   const [scanResult, setScanResult] = useState<string>("");
   const [product, setProduct] = useState<Product | null>(null);
-  const [scanStatus, setScanStatus] = useState<"success" | "error" | "">(""); // NEW
+  const [scanStatus, setScanStatus] = useState<ScannerStatus>('inactive');
   const { addItem, openCart } = useCartStore();
 
 
@@ -53,6 +53,12 @@ const App = () => {
 
 
   const startScanner = async () => {
+    if (scanStatus === 'scanning') return;
+
+    setScanStatus('scanning');
+    setProduct(null);
+    setScanResult("");
+
     try {
       const config = new ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration();
       const result = await ScanbotSDK.UI.createBarcodeScanner(config);
@@ -64,8 +70,22 @@ const App = () => {
       }
     } catch (error) {
       console.error("Scanner error", error);
+      setScanStatus("inactive");
     }
   };
+
+  // const refreshState = () => {
+  //   setScanResult("");
+  //   setProduct(null);
+  //   setScanStatus("inactive");
+  // };
+
+  const stopScanning = () => {
+    setScanStatus('inactive');
+    setProduct(null);
+    setScanResult("");
+  };
+
 
    const viewCart = () => {
     openCart();
@@ -73,9 +93,23 @@ const App = () => {
 
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto">
-      <button onClick={startScanner} className="bg-green-600 text-white px-4 py-2 rounded mt-4">
-        Start Scanner
-      </button>
+      {/* Scanner Button */}
+      <button
+      onClick={scanStatus === 'scanning' ? stopScanning : startScanner}
+      className={`px-4 py-2 rounded mt-4 text-white ${
+        scanStatus === 'scanning' ? 'bg-red-500' : 'bg-green-600'
+      }`}
+    >
+      {scanStatus === 'scanning' ? 'Stop Scanning' : 'Start Scanner'}
+    </button>
+
+      {/* Refresh Button */}
+      {/* <button
+        onClick={refreshState}
+        className="bg-gray-500 text-white px-3 py-1 rounded mt-2"
+      >
+        Refresh
+      </button> */}
 
       {scanResult && <p className="mt-4 text-sm">Scanned Barcode: {scanResult}</p>}
 
@@ -133,9 +167,6 @@ const App = () => {
         )}
       </div>
 
-
-//random comment
-
       <div className="mt-6 w-full flex flex-col items-center space-y-3">
         <p className="text-sm text-gray-600 text-center px-4">
           Point your camera at a product barcode to scan it and add to your cart.
@@ -153,4 +184,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default BarcodeScanner;
