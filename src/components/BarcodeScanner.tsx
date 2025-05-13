@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
 import type { Product, ScannerStatus } from '../types';
 
-const App = () => {
+const BarcodeScanner = () => {
   const [scanResult, setScanResult] = useState<string>("");
   const [product, setProduct] = useState<Product | null>(null);
   const [scanStatus, setScanStatus] = useState<ScannerStatus>('inactive');
@@ -183,4 +183,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default BarcodeScanner;
