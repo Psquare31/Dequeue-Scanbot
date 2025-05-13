@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import ScanbotSDK from "scanbot-web-sdk/ui";
 import { motion } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  barcode: string;
-}
+import type { Product } from '../types';
+// interface Product {
+//   id: number;
+//   name: string;
+//   price: number;
+//   description: string;
+//   barcode: string;
+// }
 
 const App = () => {
   const [scanResult, setScanResult] = useState<string>("");
