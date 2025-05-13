@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/products/(.*)",
+      "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/products/$1"
+    }
+  ]
+}

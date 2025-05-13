@@ -32,7 +32,7 @@ const App = () => {
 
   const fetchProductDetails = async (barcode: string) => {
     try {
-      const response = await fetch(`https://deque-scanbot-backend-epn9.vercel.app/api/products/${barcode}`);
+      const response = await fetch(`/api/products/${barcode}`);
       if (!response.ok) throw new Error("Product not found");
       const data = await response.json();
       setProduct(data);
