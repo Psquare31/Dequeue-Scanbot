@@ -1,10 +1,12 @@
 import React from 'react';
 import { ShoppingCart, User, Menu } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Navbar: React.FC = () => {
-  const { isAuthenticated, user, openLoginModal, logout } = useAuthStore();
+  const { loginWithRedirect } = useAuth0();
+  const { logout } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const { openCart, getTotalItems } = useCartStore();
   const totalItems = getTotalItems();
   
@@ -13,6 +15,11 @@ const Navbar: React.FC = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
@@ -29,20 +36,23 @@ const Navbar: React.FC = () => {
               <div className="flex items-center">
                 <span className="mr-2 text-sm font-medium">Hello, {user?.name}</span>
                 <button 
-                  onClick={logout}
+                  onClick={() => {
+                    logout({ logoutParams: { returnTo: window.location.origin } });
+                    setIsMenuOpen(false);
+                  }}
                   className="text-sm text-gray-600 hover:text-gray-900"
                 >
-                  Logout
+                  Log Out
                 </button>
               </div>
             ) : (
               <button 
-                onClick={openLoginModal}
+                onClick={() => loginWithRedirect()}
                 className="flex items-center text-gray-700 hover:text-blue-600"
-              >
-                <User size={20} className="mr-1" />
-                <span>Login</span>
-              </button>
+                >
+                  <User size={20} className="mr-2" />
+                  Log In
+                </button>
             )}
             
             <button 
@@ -95,25 +105,22 @@ const Navbar: React.FC = () => {
                 </div>
                 <button 
                   onClick={() => {
-                    logout();
+                    logout({ logoutParams: { returnTo: window.location.origin } });
                     setIsMenuOpen(false);
                   }}
                   className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
                 >
-                  Logout
+                  Log Out
                 </button>
               </>
             ) : (
               <button 
-                onClick={() => {
-                  openLoginModal();
-                  setIsMenuOpen(false);
-                }}
+                onClick={() => loginWithRedirect()}
                 className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100"
-              >
-                <User size={20} className="mr-2" />
-                <span>Login</span>
-              </button>
+                >
+                  <User size={20} className="mr-2" />
+                  Log In
+                </button>
             )}
           </div>
         )}

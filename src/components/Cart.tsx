@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
-import { useAuthStore } from '../store/useAuthStore';
+import { useAuth0 } from "@auth0/auth0-react";
 import toast from 'react-hot-toast';
 import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayOrderResponse, RazorpayVerifyResponse } from '../types';
 
@@ -15,7 +15,9 @@ const Cart: React.FC = () => {
     updateQuantity,
     getTotalPrice
   } = useCartStore();
-  const { isAuthenticated, openLoginModal } = useAuthStore();
+
+  const { loginWithRedirect } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const [amount, setAmount] = useState(0);
 
@@ -27,7 +29,7 @@ const Cart: React.FC = () => {
     const handlePayment = async () => {
 
       if (!isAuthenticated) {
-      openLoginModal();
+        loginWithRedirect()
       return;
     }
 

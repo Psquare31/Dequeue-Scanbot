@@ -3,7 +3,6 @@ import { ShoppingBag } from 'lucide-react';
 import Navbar from './components/Navbar';
 import BarcodeScanner from './components/BarcodeScanner';
 import Cart from './components/Cart';
-import LoginModal from './components/LoginModal';
 
 function App() {
   return (
@@ -33,8 +32,6 @@ function App() {
       {/* Cart component (slides in from the side) */}
       <Cart />
       
-      {/* Login modal */}
-      <LoginModal />
     </div>
   );
 }
