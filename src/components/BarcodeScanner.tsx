@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
 import type { Product, ScannerStatus } from '../types';
 
+
 const BarcodeScanner = () => {
   const [scanResult, setScanResult] = useState<string>("");
   const [product, setProduct] = useState<Product | null>(null);
@@ -41,7 +42,7 @@ const BarcodeScanner = () => {
       audio.play().catch(() => {});
 
       if ('vibrate' in navigator) {
-        navigator.vibrate(200);
+        navigator.vibrate(200);//verified multiple scan commit
       }
     } catch (err) {
       console.error(err);
