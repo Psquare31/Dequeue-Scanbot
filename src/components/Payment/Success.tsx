@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useCartStore } from '../../store/useCartStore';
 
 const PaymentSuccess: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, items, amount, orderId } = location.state || {};
+
+  const {clearCart} = useCartStore();
+  
+  useEffect(() => {
+    clearCart();
+    console.log("Cart cleared");
+  }, [clearCart]);
 
   if (!user || !items) {
     return (
