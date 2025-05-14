@@ -65,7 +65,7 @@ const Cart: React.FC = () => {
       amount: amount,
     }
     try {
-      const response = await axios.post('http://localhost:8000/create-order', data)
+      const response = await axios.post('https://phonepe-pg-backend.vercel.app/create-order', data)
       console.log(response.data)
       window.location.href = response.data.url
     } catch (error) {
