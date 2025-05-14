@@ -7,6 +7,7 @@ const uri = 'mongodb+srv://Psquare:mongoDBatlas@mernapp.xh4pt.mongodb.net/?retry
 const productSchema = new mongoose.Schema({
   name: String,
   price: Number,
+  quantity: Number,
   barcode: String,
   image_url: String,
   description: String,

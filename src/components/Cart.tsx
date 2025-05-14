@@ -3,9 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
-//import toast from 'react-hot-toast';
 import axios from 'axios';
-// import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayOrderResponse, RazorpayVerifyResponse } from '../types';
 import type { CartItem } from '../types';
 
 const Cart: React.FC = () => {
@@ -24,35 +22,10 @@ const Cart: React.FC = () => {
   const [amount, setAmount] = useState(0);
 
   useEffect(() => {
-    setAmount(getTotalPrice()); // Razorpay expects amount in paise
+    setAmount(getTotalPrice()); //amount in paise
   }, [getTotalPrice, items]);
 
-    // handlePayment Function
-    // const handlePayment = async () => {
-
-    //   if (!isAuthenticated) {
-    //     loginWithRedirect()
-    //   return;
-    // }
-
-    //     try {
-    //         const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/order`, {
-    //             method: "POST",
-    //             headers: {
-    //                 "content-type": "application/json"
-    //             },
-    //             body: JSON.stringify({
-    //                 amount
-    //             })
-    //         });
-
-    //         const data: RazorpayOrderResponse = await res.json();
-    //         console.log(data);
-    //         handlePaymentVerify(data.data)
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
+    
 
     const handlePayment = async () =>{
       if (!isAuthenticated) {
@@ -63,56 +36,20 @@ const Cart: React.FC = () => {
       name: user?.name,
       mobileNumber:1234567890,
       amount: amount,
+
     }
     try {
       const response = await axios.post('https://phonepe-pg-backend.vercel.app/create-order', data)
       console.log(response.data)
-      window.location.href = response.data.url
+      
+      window.location.href = response.data.url;
+
     } catch (error) {
       console.log("error in payment", error)
     }
   }
 
-    // handlePaymentVerify Function
-    // const handlePaymentVerify = async (data: RazorpayOrderData) => {
-    //     const options = {
-    //         key: import.meta.env.RAZORPAY_KEY_ID,
-    //         amount: data.amount,
-    //         currency: data.currency,
-    //         name: "Devknus",
-    //         description: "Test Mode",
-    //         order_id: data.id,
-    //         handler: async (response: RazorpayHandlerResponse) => {
-    //             console.log("response", response)
-    //             try {
-    //                 const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/verify`, {
-    //                     method: 'POST',
-    //                     headers: {
-    //                         'content-type': 'application/json'
-    //                     },
-    //                     body: JSON.stringify({
-    //                         razorpay_order_id: response.razorpay_order_id,
-    //                         razorpay_payment_id: response.razorpay_payment_id,
-    //                         razorpay_signature: response.razorpay_signature,
-    //                     })
-    //                 })
-
-    //                 const verifyData: RazorpayVerifyResponse = await res.json();
-
-    //                 if (verifyData.message) {
-    //                     toast.success(verifyData.message)
-    //                 }
-    //             } catch (error) {
-    //                 console.log(error);
-    //             }
-    //         },
-    //         theme: {
-    //             color: "#5f63b8"
-    //         }
-    //     };
-    //     const rzp1 = new window.Razorpay(options);
-    //     rzp1.open();
-    // }
+    
  
   return (
     <AnimatePresence>
