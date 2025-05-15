@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useCartStore } from '../../store/useCartStore';
 
@@ -6,13 +7,45 @@ const PaymentSuccess: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, items, amount, orderId } = location.state || {};
+  const { clearCart } = useCartStore();
 
-  const {clearCart} = useCartStore();
-  
   useEffect(() => {
-    clearCart();
-    console.log("Cart cleared");
-  }, [clearCart]);
+    const handlePaymentSuccess = async () => {
+      try {
+        // 1. Optionally verify payment
+        await axios.post('/api/confirm-payment', { orderId });
+
+        // 2. Save purchase history
+        await axios.post('https://deque-scanbot-backend.vercel.app/api/purchase-history', {
+          userId: user?.sub,
+          name: user?.name,
+          email: user?.email,
+          items,
+          amount,
+          orderId,
+        });
+
+        // 3. Generate invoice
+        await axios.post('https://deque-scanbot-backend.vercel.app/api/generate-invoice', {
+          userId: user?.sub,
+          orderId,
+        });
+
+        // 4. Clear the cart
+        clearCart();
+
+        // 5. Redirect after 2 seconds
+        setTimeout(() => navigate('/orders'), 2000);
+      } catch (err) {
+        // Handle errors (optional: show toast)
+        console.error('Payment post-processing failed:', err);
+      }
+    };
+
+    if (user && items && orderId) {
+      handlePaymentSuccess();
+    }
+  }, [user, items, amount, orderId, clearCart, navigate]);
 
   if (!user || !items) {
     return (
@@ -60,9 +93,9 @@ const PaymentSuccess: React.FC = () => {
             ))}
           </tbody>
         </table>
-        <div className="mb-2"><strong>Subtotal:</strong> ₹{(amount / 100).toFixed(2)}</div>
+        <div className="mb-2"><strong>Subtotal:</strong> ₹{(amount || 0).toFixed(2)}</div>
         <div className="mb-2"><strong>Taxes:</strong> ₹0.00</div>
-        <div className="mb-4 text-lg font-bold"><strong>Final Amount:</strong> ₹{(amount / 100).toFixed(2)}</div>
+        <div className="mb-4 text-lg font-bold"><strong>Final Amount:</strong> ₹{(amount || 0).toFixed(2)}</div>
         <div className="text-green-600 font-bold text-xl flex items-center">
           PAID <span className="ml-2">&#10004;</span>
         </div>

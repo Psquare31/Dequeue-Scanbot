@@ -7,6 +7,14 @@
     {
       "source": "/payment-success",
       "destination": "https://dequeue-scanbot.vercel.app/payment-success"
+    },
+    {
+      "source": "/api/confirm-payment",
+      "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/confirm-payment"
+    },
+    {
+      "source": "/api/purchase-history",
+      "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/purchase-history"
     }
   ]
 }
