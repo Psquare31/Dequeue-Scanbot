@@ -5,14 +5,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const PaymentSuccess: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  //const location = useLocation();
   const { user } = useAuth0();
   const { items, clearCart } = useCartStore();
 
   // Get orderId and amount from query params
-  const searchParams = new URLSearchParams(location.search);
-  const orderId = searchParams.get('orderId');
-  const amount = searchParams.get('amount');
+  // const searchParams = new URLSearchParams(location.search);
+  // const orderId = searchParams.get('orderId');
+  // const amount = searchParams.get('amount');
 
   useEffect(() => {
     // Optionally: Save purchase history, generate invoice, clear cart, etc.
@@ -40,7 +40,7 @@ const PaymentSuccess: React.FC = () => {
           <h2 className="text-2xl font-bold text-green-600">Payment Successful</h2>
           <span className="text-3xl text-green-500">&#10004;</span>
         </div>
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <div><strong>User:</strong> {user.name}</div>
           <div><strong>Email:</strong> {user.email}</div>
           <div><strong>Order ID:</strong> {orderId}</div>
@@ -70,7 +70,7 @@ const PaymentSuccess: React.FC = () => {
         <div className="mb-4 text-lg font-bold"><strong>Final Amount:</strong> ₹{((amount && !isNaN(Number(amount))) ? (Number(amount) / 100).toFixed(2) : "0.00")}</div>
         <div className="text-green-600 font-bold text-xl flex items-center">
           PAID <span className="ml-2">&#10004;</span>
-        </div>
+        </div> */}
         <button
           className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
           onClick={() => navigate('/')}

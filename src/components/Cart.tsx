@@ -35,6 +35,7 @@ const Cart: React.FC = () => {
     const data = {
       name: user?.name,
       mobileNumber:1234567890,
+      email: user?.email,
       amount: amount,
 
     }
