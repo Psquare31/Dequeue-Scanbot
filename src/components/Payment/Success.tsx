@@ -13,7 +13,7 @@ const PaymentSuccess: React.FC = () => {
     const handlePaymentSuccess = async () => {
       try {
         // 1. Optionally verify payment
-        await axios.post('/api/confirm-payment', { orderId });
+        //await axios.post('/api/confirm-payment', { orderId });
 
         // 2. Save purchase history
         await axios.post('https://deque-scanbot-backend.vercel.app/api/purchase-history', {
