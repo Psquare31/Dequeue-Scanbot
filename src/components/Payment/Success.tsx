@@ -10,40 +10,41 @@ const PaymentSuccess: React.FC = () => {
   const { clearCart } = useCartStore();
 
   useEffect(() => {
-    const handlePaymentSuccess = async () => {
-      try {
-        // 1. Optionally verify payment
-        //await axios.post('/api/confirm-payment', { orderId });
+    // const handlePaymentSuccess = async () => {
+    //   try {
+    //     // 1. Optionally verify payment
+    //     //await axios.post('/api/confirm-payment', { orderId });
 
-        // 2. Save purchase history
-        await axios.post('https://deque-scanbot-backend.vercel.app/api/purchase-history', {
-          userId: user?.sub,
-          name: user?.name,
-          email: user?.email,
-          items,
-          amount,
-          orderId,
-        });
+    //     // 2. Save purchase history
+    //     await axios.post('https://deque-scanbot-backend.vercel.app/api/purchase-history', {
+    //       userId: user?.sub,
+    //       name: user?.name,
+    //       email: user?.email,
+    //       items,
+    //       amount,
+    //       orderId,
+    //     });
 
-        // 3. Generate invoice
-        await axios.post('https://deque-scanbot-backend.vercel.app/api/generate-invoice', {
-          userId: user?.sub,
-          orderId,
-        });
+    //     // 3. Generate invoice
+    //     await axios.post('https://deque-scanbot-backend.vercel.app/api/generate-invoice', {
+    //       userId: user?.sub,
+    //       orderId,
+    //     });
 
-        // 4. Clear the cart
-        clearCart();
+    //     // 4. Clear the cart
+    //     clearCart();
 
-        // 5. Redirect after 2 seconds
-        setTimeout(() => navigate('/orders'), 2000);
-      } catch (err) {
-        // Handle errors (optional: show toast)
-        console.error('Payment post-processing failed:', err);
-      }
-    };
+    //     // 5. Redirect after 2 seconds
+    //     setTimeout(() => navigate('/orders'), 2000);
+    //   } catch (err) {
+    //     // Handle errors (optional: show toast)
+    //     console.error('Payment post-processing failed:', err);
+    //   }
+    // };
 
     if (user && items && orderId) {
-      handlePaymentSuccess();
+      navigate('/')
+      //handlePaymentSuccess();
     }
   }, [user, items, amount, orderId, clearCart, navigate]);
 
