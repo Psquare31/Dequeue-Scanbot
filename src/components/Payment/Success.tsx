@@ -19,19 +19,19 @@ const PaymentSuccess: React.FC = () => {
     clearCart();
   }, [clearCart]);
 
-  if (!user || !items) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h2 className="text-2xl font-bold mb-4">No invoice data found.</h2>
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={() => navigate('/')}
-        >
-          Go Home
-        </button>
-      </div>
-    );
-  }
+  // if (!user || !items) {
+  //   return (
+  //     <div className="flex flex-col items-center justify-center h-screen">
+  //       <h2 className="text-2xl font-bold mb-4">No invoice data found.</h2>
+  //       <button
+  //         className="bg-blue-600 text-white px-4 py-2 rounded"
+  //         onClick={() => navigate('/')}
+  //       >
+  //         Go Home
+  //       </button>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
