@@ -1,16 +1,5 @@
 {
   "rewrites": [
-    {
-      "source": "/api/products/(.*)",
-      "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/products/$1"
-    },
-    {
-      "source": "/api/confirm-payment",
-      "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/confirm-payment"
-    },
-    {
-      "source": "/api/purchase-history",
-      "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/purchase-history"
-    }
+    { "source": "/(.*)", "destination": "/"}
   ]
 }
