@@ -5,10 +5,6 @@
       "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/products/$1"
     },
     {
-      "source": "/payment-success",
-      "destination": "https://dequeue-scanbot.vercel.app/payment-success"
-    },
-    {
       "source": "/api/confirm-payment",
       "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/confirm-payment"
     },
