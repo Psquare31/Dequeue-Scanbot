@@ -1,27 +1,10 @@
 import React from 'react';
 import { ShoppingBag } from 'lucide-react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import BarcodeScanner from './components/BarcodeScanner';
 import Cart from './components/Cart';
-//verified Payment Gateway for PhonePe
-function Success() {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold text-green-500">Payment Successful!</h1>
-    </div>
-  );
-}
 
-function Failure() {
-  return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-2xl font-bold text-red-500">Payment Failed!</h1>
-    </div>
-  );
-}
-
-function Home() {
+function App() {
   return (
     <>
       <Navbar />
@@ -41,20 +24,6 @@ function Home() {
       </main>
       <Cart />
     </>
-  );
-}
-
-function App() {
-  return (
-    <Router>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/payment-success" element={<Success />} />
-          <Route path="/payment-failure" element={<Failure />} />
-        </Routes>
-      </div>
-    </Router>
   );
 }
 
