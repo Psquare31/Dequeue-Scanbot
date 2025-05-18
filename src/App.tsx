@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Invoice from "./components/Payment/Invoice";
-import Home from "./pages/Home";
+import Home from "./components/Home";
 
 function App() {
   return (
