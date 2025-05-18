@@ -5,6 +5,9 @@ import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
 import toast, {Toaster} from 'react-hot-toast';
 import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
+import { useNavigate } from 'react-router-dom';
+
+const navigate = useNavigate();
 
 const Cart: React.FC = () => {
   const {
@@ -60,7 +63,7 @@ const Cart: React.FC = () => {
             description: "Test Mode",
             order_id: data.id,
             handler: async (response: RazorpayHandlerResponse) => {
-                clearCart();
+                //clearCart();
                 console.log("response", response)
                 try {
                     const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/verify`, {
@@ -79,7 +82,8 @@ const Cart: React.FC = () => {
 
                     if (verifyData.message) {
                         toast.success(verifyData.message)
-                        
+                        navigate(`/invoice?orderId=${data.id}&amount=${data.amount}`);
+                        clearCart();
                     }
                 } catch (error) {
                     console.log(error);
