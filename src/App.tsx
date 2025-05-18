@@ -4,10 +4,9 @@ import Navbar from './components/Navbar';
 import BarcodeScanner from './components/BarcodeScanner';
 import Cart from './components/Cart';
 import Invoice from './components/Payment/Invoice';
-
-function App() {
+function Home() {
   return (
-    <Router>
+    <>
       <Navbar />
       <main className="flex-1 pt-16 pb-8 px-4">
         <div className="container mx-auto max-w-md">
@@ -24,10 +23,21 @@ function App() {
         </div>
       </main>
       <Cart />
-      <Routes>
-        <Route path="/invoice" element={<Invoice />} />
-      </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/invoice" element={<Invoice />} />
+        </Routes>
+      </div>
     </Router>
+
   );
 }
 
