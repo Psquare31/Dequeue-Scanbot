@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
-import toast from 'react-hot-toast';
+import toast, {Toaster} from 'react-hot-toast';
 import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
 
 const Cart: React.FC = () => {
@@ -79,6 +79,7 @@ const Cart: React.FC = () => {
 
                     if (verifyData.message) {
                         toast.success(verifyData.message)
+                        
                     }
                 } catch (error) {
                     console.log(error);
@@ -123,6 +124,10 @@ const Cart: React.FC = () => {
                 <X size={24} />
               </button>
             </div>
+
+            <Toaster
+              position="top-center"
+              reverseOrder={false}/>
 
             {/* Cart items */}
             <div className="flex-1 overflow-y-auto p-4">

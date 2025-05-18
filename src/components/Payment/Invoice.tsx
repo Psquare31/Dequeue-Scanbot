@@ -1,48 +1,30 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useCartStore } from '../../store/useCartStore';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useCartStore } from "../../store/useCartStore";
 
-const PaymentSuccess: React.FC = () => {
+const Invoice: React.FC = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  //const location = useLocation();
   const { user } = useAuth0();
-  const { items, clearCart } = useCartStore();
+  // You may want to get items from location.state if you clearCart before navigation
+  const { items } = useCartStore();
 
   // Get orderId and amount from query params
-  // const searchParams = new URLSearchParams(location.search);
-  // const orderId = searchParams.get('orderId');
-  // const amount = searchParams.get('amount');
-
-  useEffect(() => {
-    // Optionally: Save purchase history, generate invoice, clear cart, etc.
-    clearCart();
-  }, [clearCart]);
-
-  // if (!user || !items) {
-  //   return (
-  //     <div className="flex flex-col items-center justify-center h-screen">
-  //       <h2 className="text-2xl font-bold mb-4">No invoice data found.</h2>
-  //       <button
-  //         className="bg-blue-600 text-white px-4 py-2 rounded"
-  //         onClick={() => navigate('/')}
-  //       >
-  //         Go Home
-  //       </button>
-  //     </div>
-  //   );
-  // }
+  const searchParams = new URLSearchParams(location.search);
+  const orderId = searchParams.get("orderId");
+  const amount = searchParams.get("amount");
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-green-600">Payment Successful</h2>
-          <span className="text-3xl text-green-500">&#10004;</span>
+          <h2 className="text-2xl font-bold text-blue-600">Invoice</h2>
+          <span className="text-3xl text-green-500">&#128179;</span>
         </div>
-        {/* <div className="mb-4">
-          <div><strong>User:</strong> {user.name}</div>
-          <div><strong>Email:</strong> {user.email}</div>
+        <div className="mb-4">
+          <div><strong>User:</strong> {user?.name}</div>
+          <div><strong>Email:</strong> {user?.email}</div>
           <div><strong>Order ID:</strong> {orderId}</div>
         </div>
         <table className="w-full mb-4 border">
@@ -55,14 +37,18 @@ const PaymentSuccess: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item: any) => (
+            {items && items.length > 0 ? items.map((item: any) => (
               <tr key={item.id}>
                 <td className="p-2 border">{item.name}</td>
                 <td className="p-2 border">{item.quantity}</td>
                 <td className="p-2 border">₹{item.price.toFixed(2)}</td>
                 <td className="p-2 border">₹{(item.price * item.quantity).toFixed(2)}</td>
               </tr>
-            ))}
+            )) : (
+              <tr>
+                <td colSpan={4} className="p-2 border text-center text-gray-400">No items found</td>
+              </tr>
+            )}
           </tbody>
         </table>
         <div className="mb-2"><strong>Subtotal:</strong> ₹{((amount && !isNaN(Number(amount))) ? (Number(amount) / 100).toFixed(2) : "0.00")}</div>
@@ -70,10 +56,10 @@ const PaymentSuccess: React.FC = () => {
         <div className="mb-4 text-lg font-bold"><strong>Final Amount:</strong> ₹{((amount && !isNaN(Number(amount))) ? (Number(amount) / 100).toFixed(2) : "0.00")}</div>
         <div className="text-green-600 font-bold text-xl flex items-center">
           PAID <span className="ml-2">&#10004;</span>
-        </div> */}
+        </div>
         <button
           className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={() => navigate('/')}
+          onClick={() => navigate("/")}
         >
           Back to Home
         </button>
@@ -82,4 +68,4 @@ const PaymentSuccess: React.FC = () => {
   );
 };
 
-export default PaymentSuccess;
+export default Invoice;

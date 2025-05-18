@@ -2,6 +2,7 @@ import { ShoppingBag } from 'lucide-react';
 import Navbar from './components/Navbar';
 import BarcodeScanner from './components/BarcodeScanner';
 import Cart from './components/Cart';
+import Invoice from '././components/Payment/Invoice';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         </div>
       </main>
       <Cart />
+      <Invoice />
     </>
   );
 }
