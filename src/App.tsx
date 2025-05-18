@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Invoice from "./components/Payment/Invoice";
 import Home from "./components/Home";
-
+//Verify last commit
 function App() {
   return (
     <Router>
