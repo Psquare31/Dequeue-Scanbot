@@ -81,9 +81,9 @@ const navigate = useNavigate();
                     const verifyData: RazorpayVerifyResponse = await res.json();
 
                     if (verifyData.message) {
-                        toast.success(verifyData.message)
-                        navigate(`/invoice?orderId=${data.id}&amount=${data.amount}`);
-                        clearCart();
+                        toast.success(verifyData.message) 
+                        window.location.href = "/invoice?orderId=${data.id}&amount=${data.amount}";
+                        //clearCart();
                     }
                 } catch (error) {
                     console.log(error);
