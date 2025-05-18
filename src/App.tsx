@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import BarcodeScanner from './components/BarcodeScanner';
 import Cart from './components/Cart';
-//verified Payment Gateway for PhonePe
 function Home() {
   return (
     <>
