@@ -60,6 +60,7 @@ const Cart: React.FC = () => {
             description: "Test Mode",
             order_id: data.id,
             handler: async (response: RazorpayHandlerResponse) => {
+                clearCart();
                 console.log("response", response)
                 try {
                     const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/verify`, {
@@ -77,7 +78,6 @@ const Cart: React.FC = () => {
                     const verifyData: RazorpayVerifyResponse = await res.json();
 
                     if (verifyData.message) {
-                        clearCart();
                         toast.success(verifyData.message)
                     }
                 } catch (error) {
