@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import BarcodeScanner from './components/BarcodeScanner';
 import Cart from './components/Cart';
+import Invoice from './components/Payment/Invoice';
 function Home() {
   return (
     <>
@@ -33,6 +34,7 @@ function App() {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/invoice" element={<Invoice />} /> 
         </Routes>
       </div>
     </Router>

@@ -7,9 +7,9 @@ import toast, {Toaster} from 'react-hot-toast';
 import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
 import { useNavigate } from 'react-router-dom';
 
-const navigate = useNavigate();
 
 const Cart: React.FC = () => {
+const navigate = useNavigate();
   const {
     items,
     isOpen,
