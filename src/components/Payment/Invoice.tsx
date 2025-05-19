@@ -15,12 +15,12 @@ const Invoice: React.FC = () => {
   const amount = searchParams.get("amount");
 
   // Clear cart after invoice is generated (once, on mount)
-  useEffect(() => {
-    if (items && items.length > 0) {
-      clearCart();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   if (items && items.length > 0) {
+  //     clearCart();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
