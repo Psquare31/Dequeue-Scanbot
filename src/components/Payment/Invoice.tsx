@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCartStore } from "../../store/useCartStore";
@@ -7,13 +7,20 @@ const Invoice: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth0();
-  // You may want to get items from location.state if you clearCart before navigation
-  const { items } = useCartStore();
+  const { items, getTotalPrice, clearCart } = useCartStore();
 
   // Get orderId and amount from query params
   const searchParams = new URLSearchParams(location.search);
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
+
+  // Clear cart after invoice is generated (once, on mount)
+  useEffect(() => {
+    if (items && items.length > 0) {
+      clearCart();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">

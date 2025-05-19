@@ -81,7 +81,7 @@ const Cart: React.FC = () => {
                     if (verifyData.success) {
                         toast.success(verifyData.message);
                         window.location.href = `/invoice?orderId=${data.id}&amount=${data.amount}`;
-                        clearCart();
+                        //clearCart();
                     }
                 } catch (error) {
                     console.log(error);
