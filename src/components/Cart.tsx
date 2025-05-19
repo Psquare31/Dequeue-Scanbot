@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
-import toast from 'react-hot-toast';
-import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
+import {toast,Toaster} from 'react-hot-toast';
+import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData } from '../types';
 
 const Cart: React.FC = () => {
   const {
@@ -59,6 +59,7 @@ const Cart: React.FC = () => {
             name: "Dequeue",
             description: "Test Mode",
             order_id: data.id,
+            callback_url: "/invoice",
             handler: async (response: RazorpayHandlerResponse) => {
                 console.log("response", response)
                 try {
@@ -74,12 +75,13 @@ const Cart: React.FC = () => {
                         })
                     })
 
-                    const verifyData: RazorpayVerifyResponse = await res.json();
+                    const verifyData: any = await res.json();
+                    toast.success(verifyData.message || "Payment Successful!");
+                    clearCart();
 
-                    if (verifyData.message) {
-                        clearCart();
-                        toast.success(verifyData.message)
-                    }
+                    // if (verifyData.message) {
+                    //     toast.success(verifyData.message || "Payment Successful!")
+                    // }
                 } catch (error) {
                     console.log(error);
                 }
@@ -164,6 +166,11 @@ const Cart: React.FC = () => {
               >
                 {isAuthenticated ? 'Checkout' : 'Login to Checkout'}
               </button>
+
+              <Toaster
+                position="top-center"
+                reverseOrder={false}/>
+
             </div>
           </motion.div>
         </>
