@@ -59,8 +59,9 @@ const Cart: React.FC = () => {
             name: "Dequeue",
             description: "Test Mode",
             order_id: data.id,
-            callback_url: "/invoice",
+            callback_url: "https://deque-scanbot-backend-epn9.vercel.app/invoice",
             handler: async (response: RazorpayHandlerResponse) => {
+              clearCart();
                 console.log("response", response)
                 try {
                     const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/verify`, {
@@ -77,7 +78,6 @@ const Cart: React.FC = () => {
 
                     const verifyData: any = await res.json();
                     toast.success(verifyData.message || "Payment Successful!");
-                    clearCart();
 
                     // if (verifyData.message) {
                     //     toast.success(verifyData.message || "Payment Successful!")
