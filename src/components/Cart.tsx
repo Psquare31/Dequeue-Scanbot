@@ -4,7 +4,7 @@ import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
 import {toast,Toaster} from 'react-hot-toast';
-import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData } from '../types';
+import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
 
 const Cart: React.FC = () => {
   const {
@@ -59,9 +59,8 @@ const Cart: React.FC = () => {
             name: "Dequeue",
             description: "Test Mode",
             order_id: data.id,
-            callback_url: "https://deque-scanbot-backend-epn9.vercel.app/invoice",
             handler: async (response: RazorpayHandlerResponse) => {
-              clearCart();
+              // clearCart();
                 console.log("response", response)
                 try {
                     const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/verify`, {
@@ -76,12 +75,14 @@ const Cart: React.FC = () => {
                         })
                     })
 
-                    const verifyData: any = await res.json();
-                    toast.success(verifyData.message || "Payment Successful!");
+                    const verifyData: RazorpayVerifyResponse = await res.json();
+                    // toast.success(verifyData.message || "Payment Successful!");
 
-                    // if (verifyData.message) {
-                    //     toast.success(verifyData.message || "Payment Successful!")
-                    // }
+                    if (verifyData.success) {
+                        toast.success(verifyData.message);
+                        window.location.href = `/invoice?orderId=${data.id}&amount=${data.amount}`;
+                        clearCart();
+                    }
                 } catch (error) {
                     console.log(error);
                 }
