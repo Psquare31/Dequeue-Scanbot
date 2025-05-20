@@ -8,7 +8,7 @@ export interface Product {
 }
 
 export interface SendInvoiceProps {
-  orderId: number;
+  orderId: string;
   amount: number;
   email: string;
 }
