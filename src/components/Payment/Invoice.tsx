@@ -17,6 +17,14 @@ const Invoice: React.FC = () => {
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
 
+  // Map items to GenerateInvoice products format
+  const products = items.map((item: any) => ({
+    quantity: String(item.quantity),
+    description: item.name,
+    tax: 0, // Set tax if you have it in your item, otherwise 0
+    price: item.price,
+  }));
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
@@ -66,34 +74,25 @@ const Invoice: React.FC = () => {
           Back to Home
         </button>
 
-        <SendInvoice
+        {/* <SendInvoice
         orderId={orderId ? Number(orderId) : 0}
         amount={amount ? Number(amount) : 0}
         email={user?.email ?? ""}
-      />
+        /> */}
 
       <GenerateInvoice
           sender={{
-            company: "Buy Me A Gradient",
-            address: "Corso Italia 13",
-            zip: "1234 AB",
-            city: "Milan",
-            country: "IT",
+            company: "Dequeue",
+            country: "India",
           }}
           client={{
-            company: "Client Corp",
-            address: "Clientstreet 456",
-            zip: "4567 CD",
-            city: "Clientcity",
-            country: "Clientcountry",
+            company: user?.name || "Client",
+            country: "India",
           }}
-          products={[
-            { quantity: "2", description: "Test1", tax: 6, price: 33.87 },
-            { quantity: "4", description: "Test2", tax: 21, price: 10.45 },
-          ]}
-          invoiceNumber="2020.0001"
-          invoiceDate="05-01-2020"
-          email="mail.sumitshekhar@gmail.com" />
+          products={products}
+          invoiceNumber={orderId || "N/A"}
+          invoiceDate={new Date().toLocaleDateString()}
+          email={user?.email || ""} />
 
       </div>
     </div>

@@ -15,9 +15,9 @@ export interface SendInvoiceProps {
 
 export interface Party {
   company: string;
-  address: string;
-  zip: string;
-  city: string;
+  //address: string;
+  //zip: string;
+  //city: string;
   country: string;
 }
 
