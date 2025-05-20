@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
-import toast, {Toaster} from 'react-hot-toast';
+import {toast,Toaster} from 'react-hot-toast';
 import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
 import { useNavigate } from 'react-router-dom';
+
 
 
 const Cart: React.FC = () => {
@@ -63,7 +64,7 @@ const navigate = useNavigate();
             description: "Test Mode",
             order_id: data.id,
             handler: async (response: RazorpayHandlerResponse) => {
-                //clearCart();
+              // clearCart();
                 console.log("response", response)
                 try {
                     const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/verify`, {
@@ -80,10 +81,10 @@ const navigate = useNavigate();
 
                     const verifyData: RazorpayVerifyResponse = await res.json();
 
-                    if (verifyData.message) {
-                        toast.success(verifyData.message) 
-                        window.location.href = "/invoice?orderId=${data.id}&amount=${data.amount}";
-                        //clearCart();
+                    if (verifyData.success) {
+                        window.location.href = `/invoice?orderId=${data.id}&amount=${data.amount}`;
+                        toast.success(verifyData.message);
+                        clearCart();
                     }
                 } catch (error) {
                     console.log(error);
@@ -161,6 +162,12 @@ const navigate = useNavigate();
                 <span className="text-lg font-medium">Total:</span>
                 <span className="text-xl font-bold">${getTotalPrice().toFixed(2)}</span>
               </div>
+
+              {/* <button
+                onClick={clearCart}
+                className="w-full py-2 px-4 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors mb-4">
+                  Pay
+                </button> */}
           
               <button
                 onClick={handlePayment}
@@ -173,6 +180,11 @@ const navigate = useNavigate();
               >
                 {isAuthenticated ? 'Checkout' : 'Login to Checkout'}
               </button>
+
+              <Toaster
+                position="top-center"
+                reverseOrder={false}/>
+
             </div>
           </motion.div>
         </>
@@ -234,3 +246,8 @@ const CartItemComponent: React.FC<CartItemComponentProps> = ({
 );
 
 export default Cart;
+
+
+
+
+  

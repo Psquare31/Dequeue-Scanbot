@@ -2,6 +2,8 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCartStore } from "../../store/useCartStore";
+import SendInvoice from "./SendInvoice";
+import GenerateInvoice from "./GenerateInvoice";
 
 const Invoice: React.FC = () => {
   const location = useLocation();
@@ -23,7 +25,7 @@ const Invoice: React.FC = () => {
           <span className="text-3xl text-green-500">&#128179;</span>
         </div>
         <div className="mb-4">
-          <div><strong>User:</strong> {user?.name}</div>
+          <div><strong>User:</strong> {user?.name || "Test"}</div>
           <div><strong>Email:</strong> {user?.email}</div>
           <div><strong>Order ID:</strong> {orderId}</div>
         </div>
@@ -63,6 +65,36 @@ const Invoice: React.FC = () => {
         >
           Back to Home
         </button>
+
+        <SendInvoice
+        orderId={orderId ? Number(orderId) : 0}
+        amount={amount ? Number(amount) : 0}
+        email={user?.email ?? ""}
+      />
+
+      <GenerateInvoice
+          sender={{
+            company: "Buy Me A Gradient",
+            address: "Corso Italia 13",
+            zip: "1234 AB",
+            city: "Milan",
+            country: "IT",
+          }}
+          client={{
+            company: "Client Corp",
+            address: "Clientstreet 456",
+            zip: "4567 CD",
+            city: "Clientcity",
+            country: "Clientcountry",
+          }}
+          products={[
+            { quantity: "2", description: "Test1", tax: 6, price: 33.87 },
+            { quantity: "4", description: "Test2", tax: 21, price: 10.45 },
+          ]}
+          invoiceNumber="2020.0001"
+          invoiceDate="05-01-2020"
+          email="mail.sumitshekhar@gmail.com" />
+
       </div>
     </div>
   );

@@ -34,7 +34,7 @@ function App() {
       <div className="min-h-screen bg-gray-50 flex flex-col">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/invoice" element={<Invoice />} /> 
+          <Route path="/invoice" element={<Invoice />} />
         </Routes>
       </div>
     </Router>
