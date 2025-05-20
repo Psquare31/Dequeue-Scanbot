@@ -75,7 +75,7 @@ const Invoice: React.FC = () => {
         </button>
 
         <SendInvoice
-        orderId={orderId ? Number(orderId) : 0}
+        orderId={orderId || ""}
         amount={amount ? Number(amount) : 0}
         email={user?.email || ""}
         />
