@@ -7,6 +7,36 @@ export interface Product {
   description?: string;
 }
 
+export interface SendInvoiceProps {
+  orderId: number;
+  amount: number;
+  email: string;
+}
+
+export interface Party {
+  company: string;
+  address: string;
+  zip: string;
+  city: string;
+  country: string;
+}
+
+export interface ProductInvoice {
+  quantity: string;
+  description: string;
+  tax: number;
+  price: number;
+}
+
+export interface InvoiceProps {
+  sender: Party;
+  email: string;
+  client: Party;
+  products: ProductInvoice[];
+  invoiceNumber: string;
+  invoiceDate: string;
+}
+
 export interface RazorpayOrderResponse {
   success: boolean;
   data: {

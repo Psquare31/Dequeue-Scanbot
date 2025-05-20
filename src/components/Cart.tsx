@@ -6,6 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import {toast,Toaster} from 'react-hot-toast';
 import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
 
+
 const Cart: React.FC = () => {
   const {
     items,
@@ -76,11 +77,10 @@ const Cart: React.FC = () => {
                     })
 
                     const verifyData: RazorpayVerifyResponse = await res.json();
-                    // toast.success(verifyData.message || "Payment Successful!");
 
                     if (verifyData.success) {
-                        toast.success(verifyData.message);
                         window.location.href = `/invoice?orderId=${data.id}&amount=${data.amount}`;
+                        toast.success(verifyData.message);
                         clearCart();
                     }
                 } catch (error) {
@@ -155,6 +155,12 @@ const Cart: React.FC = () => {
                 <span className="text-lg font-medium">Total:</span>
                 <span className="text-xl font-bold">${getTotalPrice().toFixed(2)}</span>
               </div>
+
+              {/* <button
+                onClick={clearCart}
+                className="w-full py-2 px-4 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors mb-4">
+                  Pay
+                </button> */}
           
               <button
                 onClick={handlePayment}
@@ -233,16 +239,6 @@ const CartItemComponent: React.FC<CartItemComponentProps> = ({
 );
 
 export default Cart;
-
-
-
-
-
-
-
-
-
-
 
 
 
