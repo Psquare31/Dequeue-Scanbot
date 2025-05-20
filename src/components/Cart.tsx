@@ -84,7 +84,7 @@ const navigate = useNavigate();
                     if (verifyData.success) {
                         window.location.href = `/invoice?orderId=${data.id}&amount=${data.amount}`;
                         toast.success(verifyData.message);
-                        clearCart();
+                        //clearCart();
                     }
                 } catch (error) {
                     console.log(error);

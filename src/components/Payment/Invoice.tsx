@@ -10,8 +10,8 @@ const Invoice: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth0();
   // You may want to get items from location.state if you clearCart before navigation
-  const { items } = useCartStore();
-
+  const { items,clearCart } = useCartStore();
+  
   // Get orderId and amount from query params
   const searchParams = new URLSearchParams(location.search);
   const orderId = searchParams.get("orderId");
@@ -69,7 +69,7 @@ const Invoice: React.FC = () => {
         </div>
         <button
           className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={() => navigate("/")}
+          onClick={() => {clearCart(); navigate("/")} }
         >
           Back to Home
         </button>
