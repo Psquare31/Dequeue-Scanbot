@@ -8,8 +8,8 @@ interface CartState {
   items: CartItem[];
   isOpen: boolean;
   addItem: (product: Product) => void;
-  removeItem: (id: number) => void;
-  updateQuantity: (id: number, quantity: number) => void;
+  removeItem: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   toggleCart: () => void;
   closeCart: () => void;
@@ -46,13 +46,13 @@ export const useCartStore = create<CartState>()(
         });
       },
       
-      removeItem: (id: number) => {
+      removeItem: (id: string) => {
         set((state) => ({
           items: state.items.filter(item => item.id !== id)
         }));
       },
       
-      updateQuantity: (id: number, quantity: number) => {
+      updateQuantity: (id: string, quantity: number) => {
         set((state) => ({
           items: state.items.map(item => 
             item.id === id 
