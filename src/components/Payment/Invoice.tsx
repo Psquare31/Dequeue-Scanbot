@@ -74,13 +74,13 @@ const Invoice: React.FC = () => {
           Back to Home
         </button>
 
-        {/* <SendInvoice
+        <SendInvoice
         orderId={orderId ? Number(orderId) : 0}
         amount={amount ? Number(amount) : 0}
         email={user?.email ?? ""}
-        /> */}
+        />
 
-      <GenerateInvoice
+      {/* <GenerateInvoice
           sender={{
             company: "Dequeue",
             country: "India",
@@ -92,7 +92,7 @@ const Invoice: React.FC = () => {
           products={products}
           invoiceNumber={orderId || "N/A"}
           invoiceDate={new Date().toLocaleDateString()}
-          email={user?.email || ""} />
+          email={user?.email || ""} /> */}
 
       </div>
     </div>
