@@ -36,11 +36,11 @@ const BarcodeScanner = () => {
       ...data,
       id: data._id, // map MongoDB _id to Product.id
       };
-      setProduct(data);
+      setProduct(product);
       setScanStatus("success");
 
-      console.log(data);
-      addItem(data); //add product to cart
+      console.log(product);
+      addItem(product); //add product to cart
 
       const audio = new Audio('/success-sound.mp3');
       audio.play().catch(() => {});
