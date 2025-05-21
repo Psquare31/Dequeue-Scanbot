@@ -32,6 +32,10 @@ const BarcodeScanner = () => {
       if (!response.ok) throw new Error("Product not found");
 
       const data = await response.json();
+      const product: Product = {
+      ...data,
+      id: data._id, // map MongoDB _id to Product.id
+      };
       setProduct(data);
       setScanStatus("success");
 
