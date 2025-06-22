@@ -35,18 +35,19 @@ const BarcodeScanner = () => {
   const fetchProductDetails = async (barcode: string) => {
   try {
     const response = await fetch(`/api/products/${barcode}`);
-    
-    const text = await response.text(); // get raw response body
-    console.log("Raw response text:", text); // confirm structure
-    
+    const text = await response.text();
+    console.log("Raw response text:", text);
+
     if (!response.ok) {
       throw new Error(`Server returned ${response.status}: ${text}`);
     }
 
-    const productData = JSON.parse(text); // directly parse the product
+    const parsed = JSON.parse(text);
+    const productData = parsed.data; // <-- get the actual product object
+
     const product: Product = {
       ...productData,
-      id: productData._id, // map _id to id if needed
+      id: productData._id, // map _id to id
     };
 
     setProduct(product);
