@@ -4,7 +4,7 @@ import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
 import {toast,Toaster} from 'react-hot-toast';
-import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse, ApiResponse } from '../types';
+import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -41,7 +41,7 @@ const navigate = useNavigate();
       return;
     }
 
-     const amount = getTotalPrice();
+     const amount = total;
 
         try {
             const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/order`, {
@@ -54,18 +54,11 @@ const navigate = useNavigate();
                 })
             });
 
-            const responseData: ApiResponse<RazorpayOrderData> = await res.json();
-            console.log(responseData);
-            
-            if (responseData.success) {
-                handlePaymentVerify(responseData.data);
-            } else {
-                console.error("Payment order failed:", responseData.message);
-                toast.error(responseData.message || "Payment order failed");
-            }
+            const data = await res.json();
+            console.log(data);
+            handlePaymentVerify(data.data)
         } catch (error) {
             console.log(error);
-            toast.error("Failed to create payment order");
         }
     }
 
@@ -94,18 +87,15 @@ const navigate = useNavigate();
                         })
                     })
 
-                    const verifyResponse: ApiResponse<RazorpayVerifyResponse> = await res.json();
+                    const verifyData: RazorpayVerifyResponse = await res.json();
 
-                    if (verifyResponse.success && verifyResponse.data.success) {
+                    if (verifyData.success) {
                         navigate(`/invoice?orderId=${data.id}&amount=${data.amount}`);
-                        toast.success(verifyResponse.data.message);
+                        toast.success(verifyData.message);
                         //clearCart();
-                    } else {
-                        toast.error(verifyResponse.data.message || "Payment verification failed");
                     }
                 } catch (error) {
                     console.log(error);
-                    toast.error("Payment verification failed");
                 }
             },
             theme: {
@@ -280,8 +270,3 @@ const CartItemComponent: React.FC<CartItemComponentProps> = ({
 );
 
 export default Cart;
-
-
-
-
-
