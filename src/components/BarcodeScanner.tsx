@@ -10,13 +10,15 @@ const BarcodeScanner = () => {
   const [scanStatus, setScanStatus] = useState<ScannerStatus>('inactive');
   const { addItem, openCart } = useCartStore();
 
-  const scannedRef = useRef<HTMLDivElement>(null);
+  const productRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (scanResult && scannedRef.current) {
-      scannedRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-    }
-  }, [scanResult]);
+useEffect(() => {
+  if (product && productRef.current) {
+    const offset = 80; // Adjust this number to scroll even more down
+    const top = productRef.current.getBoundingClientRect().top + window.pageYOffset - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+}, [product]);
 
   useEffect(() => {
     const init = async () => {
@@ -107,7 +109,7 @@ const BarcodeScanner = () => {
       {scanStatus === 'scanning' ? 'Stop' : 'Scan'}
     </motion.button>
 
-    <div ref={scannedRef} className="w-full">
+    <div ref={productRef} className="w-full">
         {scanResult && (
           <p className="mt-4 text-sm text-cyan-900 bg-cyan-100 px-3 py-1 rounded-full">
             Scanned: {scanResult}
@@ -117,6 +119,7 @@ const BarcodeScanner = () => {
     <div className="mt-6 w-full flex justify-center">
       {scanStatus === "success" && product && (
       <motion.div
+        ref={productRef}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-5 px-5 text-center"
