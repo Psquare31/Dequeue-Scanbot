@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
   }
 
   return (
-    <nav className="w-full flex justify-between items-center px-6 py-4 bg-transparent shadow-md fixed top-0 left-0 right-0 z-50">
+    <nav className="w-full flex justify-between items-center px-6 py-4 shadow-md fixed top-0 left-0 right-0 z-50" style={{backgroundColor: "#FFEFDF"}}>
       <div className="relative md:hidden">
         <button
           onClick={toggleMenu}
