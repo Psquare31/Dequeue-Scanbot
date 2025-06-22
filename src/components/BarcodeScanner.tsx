@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import ScanbotSDK from "scanbot-web-sdk/ui";
 import { motion } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
-import type { Product, ScannerStatus } from '../types';
+import type { Product, ScannerStatus, ApiResponse } from '../types';
 
 const BarcodeScanner = () => {
   const [scanResult, setScanResult] = useState<string>("");
@@ -42,12 +42,17 @@ const BarcodeScanner = () => {
       throw new Error(`Server returned ${response.status}: ${text}`);
     }
 
-    const parsed = JSON.parse(text);
+    const parsed: ApiResponse<Product> = JSON.parse(text);
+    
+    if (!parsed.success) {
+      throw new Error(parsed.message || "Failed to fetch product");
+    }
+
     const productData = parsed.data; // <-- get the actual product object
 
     const product: Product = {
       ...productData,
-      id: productData._id, // map _id to id
+      id: productData._id || productData.id, // map _id to id, fallback to id if _id doesn't exist
     };
 
     setProduct(product);
@@ -77,7 +82,7 @@ const BarcodeScanner = () => {
     try {
       const config = new ScanbotSDK.UI.Config.BarcodeScannerScreenConfiguration();
       const result = await ScanbotSDK.UI.createBarcodeScanner(config);
-      if (result?.items.length > 0) {
+      if (result && result.items && result.items.length > 0) {
         const barcode = result.items[0].barcode.text;
         setScanResult(barcode);
         await fetchProductDetails(barcode);

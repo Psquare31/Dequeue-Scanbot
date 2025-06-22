@@ -1,10 +1,18 @@
 export interface Product {
   id: string;
+  _id?: string;
   name: string;
   price: number;
   barcode: string;
   image_url?: string;
   description?: string;
+}
+
+export interface ApiResponse<T = any> {
+  statusCode: number;
+  data: T;
+  message: string;
+  success: boolean;
 }
 
 export interface SendInvoiceProps {

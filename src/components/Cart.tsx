@@ -4,7 +4,7 @@ import { ShoppingCart, X, ChevronUp, ChevronDown, Trash2 } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuth0 } from "@auth0/auth0-react";
 import {toast,Toaster} from 'react-hot-toast';
-import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse } from '../types';
+import type { CartItem, RazorpayHandlerResponse, RazorpayOrderData, RazorpayVerifyResponse, ApiResponse } from '../types';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -54,11 +54,18 @@ const navigate = useNavigate();
                 })
             });
 
-            const data = await res.json();
-            console.log(data);
-            handlePaymentVerify(data.data)
+            const responseData: ApiResponse<RazorpayOrderData> = await res.json();
+            console.log(responseData);
+            
+            if (responseData.success) {
+                handlePaymentVerify(responseData.data);
+            } else {
+                console.error("Payment order failed:", responseData.message);
+                toast.error(responseData.message || "Payment order failed");
+            }
         } catch (error) {
             console.log(error);
+            toast.error("Failed to create payment order");
         }
     }
 
@@ -87,15 +94,18 @@ const navigate = useNavigate();
                         })
                     })
 
-                    const verifyData: RazorpayVerifyResponse = await res.json();
+                    const verifyResponse: ApiResponse<RazorpayVerifyResponse> = await res.json();
 
-                    if (verifyData.success) {
+                    if (verifyResponse.success && verifyResponse.data.success) {
                         navigate(`/invoice?orderId=${data.id}&amount=${data.amount}`);
-                        toast.success(verifyData.message);
+                        toast.success(verifyResponse.data.message);
                         //clearCart();
+                    } else {
+                        toast.error(verifyResponse.data.message || "Payment verification failed");
                     }
                 } catch (error) {
                     console.log(error);
+                    toast.error("Payment verification failed");
                 }
             },
             theme: {
