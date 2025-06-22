@@ -41,7 +41,7 @@ const navigate = useNavigate();
       return;
     }
 
-     const amount = getTotalPrice();
+     const amount = total;
 
         try {
             const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/order`, {
@@ -270,8 +270,3 @@ const CartItemComponent: React.FC<CartItemComponentProps> = ({
 );
 
 export default Cart;
-
-
-
-
-  
