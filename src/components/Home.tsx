@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "./Navbar";
 import BarcodeScanner from "./BarcodeScanner";
 import Cart from "./Cart";
-
+//Verify alignment change
 function Home() {
   return (
     <>
