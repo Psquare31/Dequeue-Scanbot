@@ -9,7 +9,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-     '/api': 'https://deque-scanbot-backend-epn9.vercel.app',
+     '/api': 'https://deque-scanbot-backend-testing.vercel.app',
     },
   },
 

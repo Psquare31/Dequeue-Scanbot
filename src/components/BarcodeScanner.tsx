@@ -52,7 +52,7 @@ const BarcodeScanner = () => {
 
     const product: Product = {
       ...productData,
-      id: productData._id || productData.id, // map _id to id, fallback to id if _id doesn't exist
+      id: productData._id, // map _id to id, fallback to id if _id doesn't exist
     };
 
     setProduct(product);
