@@ -7,7 +7,7 @@ const products = [
   { id: "4", name: "Product 4", image_url: "https://www.xbhp.com/machines/wp-content/uploads/2023/05/BMW-M5-Competition-1-1024x683.jpg", price: 250000, barcode: "444444" },
   { id: "5", name: "Product 5", image_url: "https://www.xbhp.com/machines/wp-content/uploads/2023/05/BMW-M5-Competition-1-1024x683.jpg", price: 300000, barcode: "555555" },
 ];
-
+// test recommender system
 const Rec_product = () => {
   const { addItem } = useCartStore();
 
