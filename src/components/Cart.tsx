@@ -30,8 +30,7 @@ const navigate = useNavigate();
   const subtotal = getTotalPrice();
   const discountAmount = subtotal * (DISCOUNT_PERCENT / 100);
   const taxedAmount = (subtotal) * (TAX_PERCENT / 100);
-  const total = subtotal - discountAmount + taxedAmount;
-
+  const total = Number((subtotal - discountAmount + taxedAmount).toFixed(2));
     
     //handlePayment Function
     const handlePayment = async () => {
@@ -41,7 +40,7 @@ const navigate = useNavigate();
       return;
     }
 
-     const amount = total;
+     const amount = Math.round(total * 100);
 
         try {
             const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/order`, {
