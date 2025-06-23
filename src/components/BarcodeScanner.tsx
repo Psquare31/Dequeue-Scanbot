@@ -3,7 +3,7 @@ import ScanbotSDK from "scanbot-web-sdk/ui";
 import { motion } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
 import type { Product, ScannerStatus, ApiResponse } from '../types';
-import Rec_product from "./Rec_Product";
+import Rec_product from "./Rec_product";
 
 const BarcodeScanner = () => {
   const [scanResult, setScanResult] = useState<string>("");
