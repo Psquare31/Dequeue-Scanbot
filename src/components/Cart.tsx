@@ -40,7 +40,7 @@ const navigate = useNavigate();
       return;
     }
 
-     const amount = Math.round(total * 100);
+     const amount = total;
 
         try {
             const res = await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/payment/order`, {
