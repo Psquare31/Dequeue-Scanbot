@@ -15,7 +15,7 @@ const Invoice: React.FC = () => {
 //   return <div>Loading...</div>; 
 // }
   console.log("isAuthenticated:", isAuthenticated);
-  console.log("User:", user);
+  // console.log("User:", user);
   
 
   const searchParams = new URLSearchParams(location.search);
@@ -40,6 +40,8 @@ const Invoice: React.FC = () => {
     tax: 0,
     price: item.price,
   }));
+
+  console.log(products);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-8">
@@ -124,6 +126,7 @@ const Invoice: React.FC = () => {
             orderId={orderId || ""}
             amount={totalAfterDiscount}
             email={user?.email || ""}
+            products={products}
             buttonClass="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-xs px-4 py-2 rounded-full shadow transition"
           />
           <GenerateInvoice

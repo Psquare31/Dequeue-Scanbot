@@ -15,11 +15,6 @@ export interface ApiResponse<T = any> {
   success: boolean;
 }
 
-export interface SendInvoiceProps {
-  orderId: string;
-  amount: number;
-  email: string;
-}
 
 export interface Party {
   company: string;
@@ -44,6 +39,14 @@ export interface InvoiceProps {
   invoiceNumber: string;
   invoiceDate: string;
 }
+
+export interface SendInvoiceProps {
+  orderId: string;
+  amount: number;
+  email: string;
+  products: ProductInvoice[];
+}
+
 
 export interface RazorpayOrderResponse {
   success: boolean;
