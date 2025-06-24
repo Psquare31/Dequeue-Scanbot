@@ -1,11 +1,11 @@
 import { useCartStore } from '../store/useCartStore';
 
 const products = [
-  { id: "1", _id: "1" , name: "BMW M5", image_url: "https://www.xbhp.com/machines/wp-content/uploads/2023/05/BMW-M5-Competition-1-1024x683.jpg", price: 100000, barcode: "111111" },
-  { id: "2", _id: "2" , name: "Product 2", image_url: "https://www.xbhp.com/machines/wp-content/uploads/2023/05/BMW-M5-Competition-1-1024x683.jpg", price: 150000, barcode: "222222" },
-  { id: "3", _id: "3" , name: "Product 3", image_url: "https://www.xbhp.com/machines/wp-content/uploads/2023/05/BMW-M5-Competition-1-1024x683.jpg", price: 200000, barcode: "333333" },
-  { id: "4", _id: "4" , name: "Product 4", image_url: "https://www.xbhp.com/machines/wp-content/uploads/2023/05/BMW-M5-Competition-1-1024x683.jpg", price: 250000, barcode: "444444" },
-  { id: "5", _id: "5" , name: "Product 5", image_url: "https://www.xbhp.com/machines/wp-content/uploads/2023/05/BMW-M5-Competition-1-1024x683.jpg", price: 300000, barcode: "555555" },
+  { id: "1", _id: "1", name: "Product 1", image_url: "/orange.jpg", price: 100000, barcode: "111111" },
+  { id: "2", _id: "2", name: "Product 2", image_url: "/orange.jpg", price: 150000, barcode: "222222" },
+  { id: "3", _id: "3", name: "Product 3", image_url: "/orange.jpg", price: 200000, barcode: "333333" },
+  { id: "4", _id: "4", name: "Product 4", image_url: "/orange.jpg", price: 250000, barcode: "444444" },
+  { id: "5", _id: "5", name: "Product 5", image_url: "/orange.jpg", price: 300000, barcode: "555555" },
 ];
 // test recommender system
 const Rec_product = () => {
