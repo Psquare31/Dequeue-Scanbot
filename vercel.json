@@ -1,12 +1,13 @@
 {
-  "rewrites": [
-    {
+  "rewrites": [{
+
       "source": "/api/products/(.*)",
-      "destination": "https://deque-scanbot-backend-epn9.vercel.app/api/products/$1"
+
+      "destination": "https://deque-scanbot-backend-testing.vercel.app/api/products/$1"
+
     },
-    {
-      "source": "/(.*)",
-      "destination": "/"
-    }
+    { "source": "/(.*)", "destination": "/"}
+    
+
   ]
 }

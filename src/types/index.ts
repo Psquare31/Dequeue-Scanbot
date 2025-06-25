@@ -1,11 +1,52 @@
 export interface Product {
-  id: number;
+  id: string;
+  _id: string;
   name: string;
   price: number;
   barcode: string;
   image_url?: string;
   description?: string;
 }
+
+export interface ApiResponse<T = any> {
+  statusCode: number;
+  data: T;
+  message: string;
+  success: boolean;
+}
+
+
+export interface Party {
+  company: string;
+  //address: string;
+  //zip: string;
+  //city: string;
+  country: string;
+}
+
+export interface ProductInvoice {
+  quantity: string;
+  description: string;
+  tax: number;
+  price: number;
+}
+
+export interface InvoiceProps {
+  sender: Party;
+  email: string;
+  client: Party;
+  products: ProductInvoice[];
+  invoiceNumber: string;
+  invoiceDate: string;
+}
+
+export interface SendInvoiceProps {
+  orderId: string;
+  amount: number;
+  email: string;
+  products: ProductInvoice[];
+}
+
 
 export interface RazorpayOrderResponse {
   success: boolean;
