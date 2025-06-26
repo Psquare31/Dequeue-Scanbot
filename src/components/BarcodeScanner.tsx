@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import ScanbotSDK from "scanbot-web-sdk/ui";
 import { motion } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
+import { useAuth0 } from '@auth0/auth0-react';
 import type { Product, ScannerStatus, ApiResponse } from '../types';
 import Rec_product from "./Rec_product";
 
@@ -10,6 +11,7 @@ const BarcodeScanner = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [scanStatus, setScanStatus] = useState<ScannerStatus>('inactive');
   const { addItem, openCart } = useCartStore();
+  const { user, isAuthenticated } = useAuth0();
   const [showRecommendations, setShowRecommendations] = useState(false);
 
   const productRef = useRef<HTMLDivElement>(null);
@@ -53,7 +55,14 @@ const BarcodeScanner = () => {
 
       setProduct(product);
       setScanStatus("success");
-      addItem(product);
+      
+      // Add item with user context if authenticated
+      if (isAuthenticated && user) {
+        await addItem(product, user.sub, user.name, user.email);
+      } else {
+        await addItem(product);
+      }
+      
       setShowRecommendations(true);
 
       setTimeout(() => {

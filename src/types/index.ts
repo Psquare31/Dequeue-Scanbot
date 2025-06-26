@@ -3,9 +3,15 @@ export interface Product {
   _id: string;
   name: string;
   price: number;
+  discount?: number;
   barcode: string;
   image_url?: string;
   description?: string;
+  category: string;
+  tags?: string[];
+  rating?: number;
+  totalPurchases?: number;
+  similarProducts?: string[]; // Array of product _ids
 }
 
 export interface ApiResponse<T = any> {
@@ -60,7 +66,6 @@ export interface RazorpayOrderData {
   currency: string;
 }
 
-
 export interface RazorpayVerifyResponse {
   success: boolean;
   message: string;
@@ -74,6 +79,7 @@ export interface RazorpayHandlerResponse {
 
 export interface CartItem extends Product {
   quantity: number;
+  review?: string;
 }
 
 export interface User {
