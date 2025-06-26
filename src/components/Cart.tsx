@@ -19,6 +19,7 @@ const navigate = useNavigate();
     updateQuantity,
     getTotalPrice,
     clearCart,
+    setLastOrderId
   } = useCartStore();    
   
   const { loginWithRedirect, user, isAuthenticated } = useAuth0();

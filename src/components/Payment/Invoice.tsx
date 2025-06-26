@@ -110,6 +110,12 @@ const Invoice: React.FC = () => {
 
   console.log(products);
 
+  useEffect(() => {
+    if (!orderId || !amount || items.length === 0 || orderId !== lastOrderId) {
+      navigate("/", { replace: true });
+    }
+  }, [orderId, amount, items, lastOrderId, navigate]);
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
@@ -201,7 +207,7 @@ const Invoice: React.FC = () => {
           </div>
 =======
           className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={() => {clearCart(); navigate("/")} }
+          onClick={() => {clearCart(); setLastOrderId(null); navigate("/")} }
         >
           Back to Home
         </button>
