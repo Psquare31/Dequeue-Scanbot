@@ -4,9 +4,27 @@ import BarcodeScanner from "./BarcodeScanner";
 import Cart from "./Cart";
 
 function Home() {
+  // Detect if the screen is mobile (width <= 600px)
+  const [isMobile, setIsMobile] = React.useState(true);
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 600);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <>
-     
+      {!isMobile && (
+        <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center" style={{ backgroundColor: "#FEF5E5"}}>
+          <div className="text-8xl mb-44 font-extrabold tracking-widest text-red-600">DEQUEUE</div>
+          <div className="text-3xl font-bold text-red-500 mb-4">Desktop Browsers are not Supported</div>
+          <div className="text-xl text-gray-700 text-center max-w-s">
+            This website is designed for smartphones.<br />
+            Please open it on your mobile device for the best experience.
+          </div>
+        </div>
+      )}
       <div className="fixed top-0 w-full z-50">
         <Navbar />
       </div>
