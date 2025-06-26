@@ -2,7 +2,7 @@ import { useCartStore } from '../store/useCartStore';
 import { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_HOST_URL;
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_HOST_URL_Rec;
 
 // test recommender system
 const Rec_product = () => {
