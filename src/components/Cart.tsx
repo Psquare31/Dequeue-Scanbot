@@ -22,7 +22,8 @@ const navigate = useNavigate();
     setLastOrderId
   } = useCartStore();    
   
-  const { loginWithRedirect, user, isAuthenticated } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const DISCOUNT_PERCENT = 10;
   const TAX_PERCENT = 5; 
@@ -89,25 +90,10 @@ const navigate = useNavigate();
                     const verifyData: RazorpayVerifyResponse = await res.json();
 
                     if (verifyData.success) {
-                        // Finalize purchase history after successful payment
-                        if (user && user.sub) {
-                          try {
-                            // Finalize the existing draft purchase history
-                            await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/purchase-history/user/${encodeURIComponent(user.sub)}/finalize`, {
-                              method: 'PATCH',
-                              headers: { 'Content-Type': 'application/json' },
-                              body: JSON.stringify({
-                                orderId: data.id
-                              })
-                            });
-                          } catch (e) {
-                            console.error('Error finalizing purchase history:', e);
-                          }
-                        }
-                        
+                        setLastOrderId(data.id);
                         navigate(`/invoice?orderId=${data.id}&amount=${data.amount}`);
                         toast.success(verifyData.message);
-                        clearCart(user?.sub);
+                        //clearCart();
                     }
                 } catch (error) {
                     console.log(error);
@@ -117,38 +103,10 @@ const navigate = useNavigate();
                 color: "#5f63b8"
             }
         };
-        const rzp1 = new (window as any).Razorpay(options);
+        const rzp1 = new window.Razorpay(options);
         rzp1.open();
     }
-
-    // Patch removeItem and addItem to pass userId
-    const handleRemoveItem = async (id: string) => {
-      if (user && user.sub) {
-        await removeItem(id, user.sub);
-        // Optionally, trigger recommendations update here
-      } else {
-        await removeItem(id);
-      }
-    };
-
-    // Handle quantity updates with user context
-    const handleUpdateQuantity = async (id: string, quantity: number) => {
-      if (user && user.sub) {
-        await updateQuantity(id, quantity, user.sub);
-      } else {
-        await updateQuantity(id, quantity);
-      }
-    };
-
-    // Handle cart clearing with user context
-    const handleClearCart = async () => {
-      if (user && user.sub) {
-        await clearCart(user.sub);
-      } else {
-        await clearCart();
-      }
-    };
-
+ 
   return (
     <AnimatePresence>
       {isOpen && (
@@ -199,8 +157,8 @@ const navigate = useNavigate();
                     <CartItemComponent
                       key={item.id}
                       item={item}
-                      onRemove={() => handleRemoveItem(item.id)}
-                      onUpdateQuantity={(quantity) => handleUpdateQuantity(item.id, quantity)}
+                      onRemove={() => removeItem(item.id)}
+                      onUpdateQuantity={(quantity) => updateQuantity(item.id, quantity)}
                     />
                   ))}
                 </ul>
