@@ -4,7 +4,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_HOST_URL_Rec;
 
-// test recommender system
+// Verify recommender system
 const Rec_product = () => {
   const { addItem } = useCartStore();
   const { user, isAuthenticated, isLoading } = useAuth0();
