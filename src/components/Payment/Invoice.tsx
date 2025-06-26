@@ -10,7 +10,7 @@ const Invoice: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isLoading, isAuthenticated } = useAuth0();
-  const { items, clearCart } = useCartStore();
+  const { items, clearCart, lastOrderId, setLastOrderId } = useCartStore();
 //   if (isLoading) {
 //   return <div>Loading...</div>; 
 // }
@@ -42,6 +42,12 @@ const Invoice: React.FC = () => {
   }));
 
   console.log(products);
+
+  useEffect(() => {
+    if (!orderId || !amount || items.length === 0 || orderId !== lastOrderId) {
+      navigate("/", { replace: true });
+    }
+  }, [orderId, amount, items, lastOrderId, navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-8">
@@ -117,7 +123,7 @@ const Invoice: React.FC = () => {
         <div className="flex flex-wrap gap-2 justify-center mt-2">
           <button
           className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={() => {clearCart(); navigate("/")} }
+          onClick={() => {clearCart(); setLastOrderId(null); navigate("/")} }
         >
           Back to Home
         </button>

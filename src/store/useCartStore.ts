@@ -16,6 +16,8 @@ interface CartState {
   openCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  lastOrderId: string | null; // fix type here
+  setLastOrderId: (orderId: string | null) => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -84,7 +86,9 @@ export const useCartStore = create<CartState>()(
       
       getTotalPrice: () => {
         return get().items.reduce((total, item) => total + (item.price * item.quantity), 0);
-      }
+      },
+      lastOrderId: null,
+      setLastOrderId: (orderId) => set({ lastOrderId: orderId }),
     }),
     {
       name: 'cart-storage',

@@ -19,6 +19,7 @@ const navigate = useNavigate();
     updateQuantity,
     getTotalPrice,
     clearCart,
+    setLastOrderId
   } = useCartStore();    
   
   const { loginWithRedirect } = useAuth0();
@@ -89,6 +90,7 @@ const navigate = useNavigate();
                     const verifyData: RazorpayVerifyResponse = await res.json();
 
                     if (verifyData.success) {
+                        setLastOrderId(data.id);
                         navigate(`/invoice?orderId=${data.id}&amount=${data.amount}`);
                         toast.success(verifyData.message);
                         //clearCart();
