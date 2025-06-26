@@ -25,12 +25,11 @@ const navigate = useNavigate();
 
   const DISCOUNT_PERCENT = 10;
   const TAX_PERCENT = 5; 
-
+//verify amount type fix
   const subtotal = getTotalPrice();
   const discountAmount = subtotal * (DISCOUNT_PERCENT / 100);
   const taxedAmount = (subtotal) * (TAX_PERCENT / 100);
-  const total = subtotal - discountAmount + taxedAmount;
-
+  const total = Number((subtotal - discountAmount + taxedAmount).toFixed(2));
     
     //handlePayment Function
     const handlePayment = async () => {

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useEffect } from "react";
+>>>>>>> a474ff51bd0db157c38fcbc7ca1babf7e980602f
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCartStore } from "../../store/useCartStore";
@@ -38,8 +42,17 @@ const Invoice: React.FC = () => {
   const navigate = useNavigate();
   const { user, isLoading, isAuthenticated } = useAuth0();
   const { items, clearCart } = useCartStore();
+<<<<<<< HEAD
   const [purchaseHistory, setPurchaseHistory] = useState<PurchaseHistory | null>(null);
   const [loading, setLoading] = useState(true);
+=======
+//   if (isLoading) {
+//   return <div>Loading...</div>; 
+// }
+  console.log("isAuthenticated:", isAuthenticated);
+  // console.log("User:", user);
+  
+>>>>>>> a474ff51bd0db157c38fcbc7ca1babf7e980602f
 
   const searchParams = new URLSearchParams(location.search);
   const orderId = searchParams.get("orderId");
@@ -94,6 +107,8 @@ const Invoice: React.FC = () => {
     tax: 0,
     price: item.price,
   }));
+
+  console.log(products);
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
@@ -155,6 +170,7 @@ const Invoice: React.FC = () => {
 
         <div className="flex flex-wrap gap-2 justify-center mt-2">
           <button
+<<<<<<< HEAD
             className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
             onClick={() => {clearCart(user?.sub); navigate("/")} }
           >
@@ -183,6 +199,38 @@ const Invoice: React.FC = () => {
               buttonClass="bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs px-4 py-2 rounded-full shadow transition"
             />
           </div>
+=======
+          className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
+          onClick={() => {clearCart(); navigate("/")} }
+        >
+          Back to Home
+        </button>
+        <div className="flex flex-row gap-2 justify-center">
+          <SendInvoice
+            orderId={orderId || ""}
+            amount={totalAfterDiscount}
+            email={user?.email || ""}
+            products={products}
+            buttonClass="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-xs px-4 py-2 rounded-full shadow transition"
+          />
+          <GenerateInvoice
+            sender={{
+              company: "Dequeue",
+              country: "India",
+            }}
+            client={{
+              company: user?.name || "Client",
+              country: "India",
+            }}
+            products={products}
+            invoiceNumber={orderId || "N/A"}
+            invoiceDate={new Date().toLocaleDateString()}
+            email={user?.email || ""}
+            buttonClass="bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs px-4 py-2 rounded-full shadow transition"
+          />
+        </div>
+          
+>>>>>>> a474ff51bd0db157c38fcbc7ca1babf7e980602f
         </div>
       </div>
     </div>

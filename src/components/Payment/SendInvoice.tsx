@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import type{ SendInvoiceProps } from "../../types";
-const SendInvoice: React.FC<SendInvoiceProps> = ({ orderId, amount, email }) => {
+const SendInvoice: React.FC<SendInvoiceProps> = ({ orderId, amount, email, products }) => {
   const [status, setStatus] = useState<string>("");
 
   const sendInvoice = async () => {
@@ -11,7 +11,8 @@ const SendInvoice: React.FC<SendInvoiceProps> = ({ orderId, amount, email }) => 
       const response = await axios.post<{ message: string }>(
         // `${import.meta.env.VITE_MAIL_BACKEND_HOST_URL}/send-invoice`
         "https://invoice-mailer-one.vercel.app/send-invoice",
-        { orderId, amount, email }
+        // "http://localhost:3002/send-invoice",
+        { orderId, amount, email, products }
       );
 
       setStatus(response.data.message);
