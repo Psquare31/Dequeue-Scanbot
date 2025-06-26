@@ -92,6 +92,7 @@ const navigate = useNavigate();
                         // Finalize purchase history after successful payment
                         if (user && user.sub) {
                           try {
+                            setLastOrderId(data.id);
                             // Finalize the existing draft purchase history
                             await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/purchase-history/user/${encodeURIComponent(user.sub)}/finalize`, {
                               method: 'PATCH',
@@ -100,6 +101,7 @@ const navigate = useNavigate();
                                 orderId: data.id
                               })
                             });
+
                           } catch (e) {
                             console.error('Error finalizing purchase history:', e);
                           }
@@ -107,7 +109,6 @@ const navigate = useNavigate();
                         
                         navigate(`/invoice?orderId=${data.id}&amount=${data.amount}`);
                         toast.success(verifyData.message);
-                        clearCart(user?.sub);
                     }
                 } catch (error) {
                     console.log(error);

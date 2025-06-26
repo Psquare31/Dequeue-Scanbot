@@ -1,107 +1,40 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-=======
 import React, { useEffect } from "react";
->>>>>>> a474ff51bd0db157c38fcbc7ca1babf7e980602f
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCartStore } from "../../store/useCartStore";
-import { purchaseHistoryUtils } from "../../utils/purchaseHistoryUtils";
 import SendInvoice from "./SendInvoice";
 import GenerateInvoice from "./GenerateInvoice";
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-
-interface PurchaseHistoryItem {
-  _id: string;
-  name: string;
-  price: number;
-  discount: number;
-  barcode: string;
-  image_url?: string;
-  description?: string;
-  quantity: number;
-  rating?: number;
-  review?: string;
-  category: string;
-}
-
-interface PurchaseHistory {
-  _id: string;
-  userId: string;
-  name: string;
-  email: string;
-  items: PurchaseHistoryItem[];
-  amount: number;
-  orderId: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 const Invoice: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isLoading, isAuthenticated } = useAuth0();
-  const { items, clearCart } = useCartStore();
-<<<<<<< HEAD
-  const [purchaseHistory, setPurchaseHistory] = useState<PurchaseHistory | null>(null);
-  const [loading, setLoading] = useState(true);
-=======
+  const { items, clearCart, lastOrderId, setLastOrderId } = useCartStore();
 //   if (isLoading) {
 //   return <div>Loading...</div>; 
 // }
   console.log("isAuthenticated:", isAuthenticated);
   // console.log("User:", user);
   
->>>>>>> a474ff51bd0db157c38fcbc7ca1babf7e980602f
 
   const searchParams = new URLSearchParams(location.search);
   const orderId = searchParams.get("orderId");
   const amount = searchParams.get("amount");
 
+
   const discount = 10;
 
-  useEffect(() => {
-    const fetchPurchaseHistory = async () => {
-      if (orderId) {
-        try {
-          setLoading(true);
-          const response = await purchaseHistoryUtils.getPurchaseHistoryByOrderId(orderId);
-          if (response.success) {
-            setPurchaseHistory(response.data);
-          }
-        } catch (error) {
-          console.error('Error fetching purchase history:', error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setLoading(false);
-      }
-    };
-
-    fetchPurchaseHistory();
-  }, [orderId]);
-
-  console.log("isAuthenticated:", isAuthenticated);
-  console.log("User:", user);
-
-  if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading invoice...</div>;
-  }
-
-  if (!purchaseHistory) {
-    return <div className="flex items-center justify-center min-h-screen">Purchase history not found</div>;
-  }
-
-  const subtotal = purchaseHistory.items.reduce(
-    (sum: number, item: PurchaseHistoryItem) => sum + item.price * item.quantity,
+  const subtotal = items.reduce(
+    (sum: number, item: any) => sum + item.price * item.quantity,
     0
   );
+
 
   const discountAmount = subtotal * (discount / 100);
   const totalAfterDiscount = subtotal - discountAmount;
 
-  const products = purchaseHistory.items.map((item: PurchaseHistoryItem) => ({
+  const products = items.map((item: any) => ({
     quantity: String(item.quantity),
     description: item.name,
     tax: 0,
@@ -114,31 +47,24 @@ const Invoice: React.FC = () => {
     if (!orderId || !amount || items.length === 0 || orderId !== lastOrderId) {
       navigate("/", { replace: true });
     }
-  }, [orderId, amount, items, lastOrderId, navigate]);
+}, [orderId, amount, items, lastOrderId, navigate]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Invoice</h1>
-          <p className="text-gray-600">Order ID: {purchaseHistory.orderId}</p>
-          <p className="text-gray-600">Date: {new Date(purchaseHistory.createdAt).toLocaleDateString()}</p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-8">
+      <div className="bg-white shadow-2xl rounded-2xl p-8 max-w-md w-full border border-gray-300 relative">
+        
+        <div className="flex flex-col items-center mb-6">
+          <span className="text-3xl font-extrabold tracking-widest text-blue-700">DEQUEUE</span>
+          <span className="text-xs text-gray-400 tracking-widest">INVOICE</span>
+          <span className="mt-2 text-xs text-gray-500">Order ID: <span className="font-mono">{orderId}</span></span>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Bill To:</h3>
-            <p className="text-gray-700">{purchaseHistory.name}</p>
-            <p className="text-gray-700">{purchaseHistory.email}</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4">From:</h3>
-            <p className="text-gray-700">Dequeue</p>
-            <p className="text-gray-700">123 Main Street</p>
-            <p className="text-gray-700">City, State 12345</p>
-          </div>
+        
+        <div className="mb-4 text-xs text-gray-700">
+          <div><span className="font-semibold">Name:</span> {user?.name || "Test"}</div>
+          <div><span className="font-semibold">Email:</span> {user?.email}</div>
+          <div><span className="font-semibold">Date:</span> {new Date().toLocaleDateString()}</div>
         </div>
-
+        
         <table className="w-full mb-4 border border-gray-200 rounded font-mono text-xs">
           <thead>
             <tr className="bg-gray-100 text-gray-700">
@@ -149,8 +75,8 @@ const Invoice: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {purchaseHistory.items && purchaseHistory.items.length > 0 ? purchaseHistory.items.map((item: PurchaseHistoryItem) => (
-              <tr key={item._id} className="text-center">
+            {items && items.length > 0 ? items.map((item: any) => (
+              <tr key={item.id} className="text-center">
                 <td className="p-2 border-b">{item.name}</td>
                 <td className="p-2 border-b">{item.quantity}</td>
                 <td className="p-2 border-b">₹{item.price.toFixed(2)}</td>
@@ -169,43 +95,33 @@ const Invoice: React.FC = () => {
           <span className="text-xs text-gray-700">{discount}%</span>
         </div>
         
-        <div className="flex items-center gap-2 mb-4">
-          <span className="text-xs text-gray-700 font-semibold">Total:</span>
-          <span className="text-xs text-gray-700">₹{totalAfterDiscount.toFixed(2)}</span>
+        <div className="flex flex-col gap-1 mb-4 text-xs">
+          <div className="flex justify-between">
+            <span>Subtotal:</span>
+            <span>₹{subtotal.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Discount:</span>
+            <span className="text-green-600">-₹{discountAmount.toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Taxes (5%):</span>
+            <span className="text-blue-400">+₹{(subtotal * 0.05).toFixed(2)}</span>
+          </div>
+          <div className="flex justify-between font-bold text-base mt-2">
+            <span>Total:</span>
+            <span>₹{totalAfterDiscount.toFixed(2)}</span>
+          </div>
         </div>
-
+        
+        <div className="flex items-center justify-center mb-6">
+          <span className="bg-green-100 text-green-700 font-bold px-4 py-1 rounded-full text-xs flex items-center gap-2">
+            PAID <span className="text-lg">&#10004;</span>
+          </span>
+        </div>
+        
         <div className="flex flex-wrap gap-2 justify-center mt-2">
           <button
-<<<<<<< HEAD
-            className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
-            onClick={() => {clearCart(user?.sub); navigate("/")} }
-          >
-            Back to Home
-          </button>
-          <div className="flex flex-row gap-2 justify-center">
-            <SendInvoice
-              orderId={purchaseHistory.orderId}
-              amount={totalAfterDiscount}
-              email={purchaseHistory.email}
-              buttonClass="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-xs px-4 py-2 rounded-full shadow transition"
-            />
-            <GenerateInvoice
-              sender={{
-                company: "Dequeue",
-                country: "India",
-              }}
-              client={{
-                company: purchaseHistory.name,
-                country: "India",
-              }}
-              products={products}
-              invoiceNumber={purchaseHistory.orderId}
-              invoiceDate={new Date(purchaseHistory.createdAt).toLocaleDateString()}
-              email={purchaseHistory.email}
-              buttonClass="bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs px-4 py-2 rounded-full shadow transition"
-            />
-          </div>
-=======
           className="mt-6 bg-blue-600 text-white px-4 py-2 rounded"
           onClick={() => {clearCart(); setLastOrderId(null); navigate("/")} }
         >
@@ -236,11 +152,12 @@ const Invoice: React.FC = () => {
           />
         </div>
           
->>>>>>> a474ff51bd0db157c38fcbc7ca1babf7e980602f
         </div>
       </div>
     </div>
   );
 };
 
-export default withAuthenticationRequired(Invoice);
+export default withAuthenticationRequired(Invoice, {
+  onRedirecting: () => <div>Loading...</div>,
+});
