@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware';
 import type { CartItem, Product } from '../types';
 
 // Use environment variable for backend URL
-const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_HOST_URL;
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_HOST_URL_Rec;
 console.log(BACKEND_BASE_URL);
 interface CartState {
   items: CartItem[];

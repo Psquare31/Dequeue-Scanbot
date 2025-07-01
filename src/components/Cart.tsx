@@ -94,7 +94,7 @@ const navigate = useNavigate();
                           try {
                             setLastOrderId(data.id);
                             // Finalize the existing draft purchase history
-                            await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL}/api/purchase-history/user/${encodeURIComponent(user.sub)}/finalize`, {
+                            await fetch(`${import.meta.env.VITE_BACKEND_HOST_URL_Rec}/api/purchase-history/user/${encodeURIComponent(user.sub)}/finalize`, {
                               method: 'PATCH',
                               headers: { 'Content-Type': 'application/json' },
                               body: JSON.stringify({

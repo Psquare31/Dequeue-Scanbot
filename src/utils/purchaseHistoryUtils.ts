@@ -1,4 +1,4 @@
-const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_HOST_URL;
+const BACKEND_BASE_URL = import.meta.env.VITE_BACKEND_HOST_URL_Rec;
 
 export const purchaseHistoryUtils = {
   // Add items to purchase history draft
