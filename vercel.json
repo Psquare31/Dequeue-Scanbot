@@ -1,4 +1,4 @@
-{
+{{
   "rewrites": [
     {
       "source": "/api/products/:path*",
@@ -6,11 +6,12 @@
     },
     {
       "source": "/api/recommendations/:path*",
-      "destination": "https://deque-scanbot-backend-testing.vercel.app/api/recommendations/:path"
+      "destination": "https://deque-scanbot-backend-testing.vercel.app/api/recommendations/:path*"
     },
     {
       "source": "/(.*)",
-      "destination": "/"
-    }
-  ]
+      "destination": "/"
+    }
+  ]
 }
+
