@@ -1,13 +1,16 @@
 {
-  "rewrites": [{
-
-      "source": "/api/products/(.*)",
-
-      "destination": "https://deque-scanbot-backend-testing.vercel.app/api/products/$1"
-
+  "rewrites": [
+    {
+      "source": "/api/products/:path*",
+      "destination": "https://deque-scanbot-backend-testing.vercel.app/api/products/:path*"
     },
-    { "source": "/(.*)", "destination": "/"}
-    
-
-  ]
+    {
+      "source": "/api/recommendations/:path*",
+      "destination": "https://deque-scanbot-backend-testing.vercel.app/api/recommendations/:path"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
 }
