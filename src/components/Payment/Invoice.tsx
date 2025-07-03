@@ -29,10 +29,12 @@ const Invoice: React.FC = () => {
     (sum: number, item: any) => sum + item.price * item.quantity,
     0
   );
+  const TAX_PERCENT = 5;
+  const taxedAmount = (subtotal) * (TAX_PERCENT / 100);
 
 
   const discountAmount = subtotal * (discount / 100);
-  const totalAfterDiscount = subtotal - discountAmount;
+  const totalAfterDiscount = subtotal - discountAmount + taxedAmount;
 
   const products = items.map((item: any) => ({
     quantity: String(item.quantity),
@@ -106,7 +108,7 @@ const Invoice: React.FC = () => {
           </div>
           <div className="flex justify-between">
             <span>Taxes (5%):</span>
-            <span className="text-blue-400">+₹{(subtotal * 0.05).toFixed(2)}</span>
+            <span className="text-blue-400">+₹{taxedAmount.toFixed(2)}</span>
           </div>
           <div className="flex justify-between font-bold text-base mt-2">
             <span>Total:</span>
