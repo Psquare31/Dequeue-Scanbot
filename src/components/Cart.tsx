@@ -274,13 +274,7 @@ const CartItemComponent: React.FC<CartItemComponentProps> = ({
     className="flex items-center p-3 border border-gray-200 rounded-lg"
   >
     <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
-      {item.image_url ? (
-        <img src={item.image_url || '/Product.jpg'} alt={item.name} className="w-full h-full object-cover" />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center bg-gray-200">
-          <span className="text-gray-500 text-xs">No image</span>
-        </div>
-      )}
+      <img src={item.image_url || '/Product.jpg'} alt={item.name} className="w-full h-full object-cover" />
     </div>
 
     <div className="ml-3 flex-1">
