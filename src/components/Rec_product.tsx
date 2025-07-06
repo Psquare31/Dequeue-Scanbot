@@ -68,7 +68,7 @@ const Rec_product = () => {
             >
               {/* Placeholder image if not available */}
               <img
-                src={product.image_url || 'https://via.placeholder.com/160x96?text=No+Image'}
+                src={product.image_url || '/Product.jpg'}
                 alt={product.name}
                 className="w-full h-24 object-cover rounded-md"
               />
