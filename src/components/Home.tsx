@@ -29,10 +29,10 @@ function Home() {
         <Navbar />
       </div>
 
-      <main className="min-h-screen bg-[#FEF5E5] flex flex-col pt-[70px]">
+      <main className="min-h-screen bg-[#FEF5E5] flex flex-col pt-[40px]">
         
         <div
-          className="mt-6 w-full bg-cover bg-center relative"
+          className="w-full bg-cover bg-center relative"
           style={{
             backgroundImage: `url('/dequebg6858604e8e85f_png.png')`,
             backgroundRepeat: "no-repeat",
