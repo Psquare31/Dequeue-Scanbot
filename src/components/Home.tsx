@@ -38,11 +38,11 @@ function Home() {
             backgroundPosition: "center",
             backgroundColor: "#FEF5E5",
             backgroundSize: "98%",
-            minHeight: "60vh",
+            minHeight: "55vh",
           }}
         ></div>
 
-        <div className="w-full flex items-center justify-center py-2 px-4 mt-[-12px]">
+        <div className="w-full flex items-center justify-center py-2 px-4 mt-[-24px]">
           <BarcodeScanner />
         </div>
       </main>
