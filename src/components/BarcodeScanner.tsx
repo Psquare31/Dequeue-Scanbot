@@ -125,11 +125,11 @@ const BarcodeScanner = () => {
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto px-2 sm:px-4 py-8 overflow-x-hidden">
 
-      <div className="flex flex-col items-center mt-6 mb-8 w-full">
+      <div className="flex flex-col items-center mt-3 mb-8 w-full">
         <motion.button
           whileTap={{ scale: 0.96 }}
           onClick={scanStatus === 'scanning' ? stopScanning : startScanner}
-          className={`w-40 h-14 rounded-full font-medium text-white shadow transition-colors ${
+          className={`w-40 h-12 rounded-full font-medium text-white shadow transition-colors ${
             scanStatus === 'scanning' ? 'bg-red-500 hover:bg-red-600' : 'bg-red-500 hover:bg-red-600'
           }`}
         >
