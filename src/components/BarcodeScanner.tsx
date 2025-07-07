@@ -13,7 +13,7 @@ const BarcodeScanner = () => {
   const { addItem, openCart } = useCartStore();
   const { user, isAuthenticated } = useAuth0();
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const [manualInputOpen, setManualInputOpen] = useState(false);
+  // Removed manualInputOpen state as manual entry is now inline
   const [manualBarcode, setManualBarcode] = useState("");
 
   const productRef = useRef<HTMLDivElement>(null);
@@ -124,60 +124,48 @@ const BarcodeScanner = () => {
 
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto px-2 sm:px-4 py-8 overflow-x-hidden">
-      <div className="flex flex-row gap-4 mt-6 mb-8">
+
+      <div className="flex flex-col items-center mt-6 mb-8 w-full">
         <motion.button
           whileTap={{ scale: 0.96 }}
           onClick={scanStatus === 'scanning' ? stopScanning : startScanner}
-          className={`w-44 h-14 rounded-full font-medium text-white shadow transition-colors ${
-        scanStatus === 'scanning' ? 'bg-red-500 hover:bg-red-600' : 'bg-red-500 hover:bg-red-600'
+          className={`w-40 h-14 rounded-full font-medium text-white shadow transition-colors ${
+            scanStatus === 'scanning' ? 'bg-red-500 hover:bg-red-600' : 'bg-red-500 hover:bg-red-600'
           }`}
         >
           {scanStatus === 'scanning' ? 'Stop' : 'Scan'}
         </motion.button>
 
-        
-        <button
-          className="w-44 h-14 rounded-full font-medium bg-red-500 text-white shadow transition-colors hover:bg-red-600"
-          onClick={() => setManualInputOpen(true)}
-        >
-          Enter Barcode
-        </button>
-      </div>
-
-      
-      {manualInputOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <form
-            onSubmit={handleManualSubmit}
-            className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 max-w-full"
-          >
-            <div className="text-lg font-semibold mb-2">Enter Barcode</div>
-            <input
-              type="text"
-              value={manualBarcode}
-              onChange={e => setManualBarcode(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 w-full text-center focus:outline-none focus:ring-2 focus:ring-red-400"
-              placeholder="Enter barcode number"
-              autoFocus
-            />
-            <div className="flex gap-2 w-full">
-              <button
-                type="button"
-                className="flex-1 py-2 rounded bg-gray-200 text-gray-700 font-medium hover:bg-gray-300"
-                onClick={() => setManualInputOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="flex-1 py-2 rounded bg-red-500 text-white font-medium hover:bg-red-600"
-              >
-                Submit
-              </button>
+        {/* Manual entry placeholder below scan button */}
+        <div className="w-full max-w-xs mt-6 flex flex-col items-center">
+          <span className="text-gray-500 text-sm mb-2 font-serif">Having trouble scanning?</span>
+          <form onSubmit={handleManualSubmit} className="w-full flex flex-col text-xs items-center gap-2" style={{letterSpacing: '0.05em'}}>
+            <div className="relative w-full">
+              <input
+                type="text"
+                value={manualBarcode}
+                onChange={e => setManualBarcode(e.target.value)}
+                className="w-full h-11 pl-12 pr-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-800 text-base shadow-sm focus:outline-none focus:ring-2 focus:ring-red-400 transition-all placeholder-gray-400"
+                placeholder="Enter barcode manually"
+                style={{ fontFamily: 'monospace', letterSpacing: '0.05em' }}
+              />
+            
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7v10M17 7v10M11 7v10M13 7v10"/></svg>
+              </span>
             </div>
+            <button
+              type="submit"
+              className="w-full h-10 rounded-full bg-red-500 text-white font-medium shadow transition-colors hover:bg-red-600 mt-1"
+              disabled={!manualBarcode.trim()}
+              style={{letterSpacing: '0.01em'}}
+            >
+              Add to Cart
+            </button>
           </form>
         </div>
-      )}
+      </div>
+      {/* ...existing code... (removed obsolete modal closing parenthesis) */}
 
       <div ref={productRef} className="w-full">
         {scanResult && (

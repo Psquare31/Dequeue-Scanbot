@@ -4,7 +4,6 @@ import BarcodeScanner from "./BarcodeScanner";
 import Cart from "./Cart";
 
 function Home() {
-  // Detect if the screen is mobile (width <= 600px)
   const [isMobile, setIsMobile] = React.useState(true);
   React.useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 600);
@@ -38,8 +37,8 @@ function Home() {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             backgroundColor: "#FEF5E5",
-            backgroundSize: "99%",
-            minHeight: "70vh",
+            backgroundSize: "98%",
+            minHeight: "60vh",
           }}
         ></div>
 
