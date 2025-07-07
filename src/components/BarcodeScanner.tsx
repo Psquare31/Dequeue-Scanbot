@@ -13,6 +13,8 @@ const BarcodeScanner = () => {
   const { addItem, openCart } = useCartStore();
   const { user, isAuthenticated } = useAuth0();
   const [showRecommendations, setShowRecommendations] = useState(false);
+  const [manualInputOpen, setManualInputOpen] = useState(false);
+  const [manualBarcode, setManualBarcode] = useState("");
 
   const productRef = useRef<HTMLDivElement>(null);
 
@@ -110,17 +112,72 @@ const BarcodeScanner = () => {
 
   const viewCart = () => openCart();
 
+  const handleManualSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (manualBarcode.trim()) {
+      setManualInputOpen(false);
+      setScanResult(manualBarcode);
+      await fetchProductDetails(manualBarcode);
+      setManualBarcode("");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center w-full max-w-md mx-auto px-2 sm:px-4 py-8 overflow-x-hidden">
-      <motion.button
-        whileTap={{ scale: 0.96 }}
-        onClick={scanStatus === 'scanning' ? stopScanning : startScanner}
-        className={`mt-6 mb-8 w-44 h-14 rounded-full font-medium text-white shadow transition-colors ${
-          scanStatus === 'scanning' ? 'bg-red-500 hover:bg-red-600' : 'bg-red-500 hover:bg-red-600'
-        }`}
-      >
-        {scanStatus === 'scanning' ? 'Stop' : 'Scan'}
-      </motion.button>
+      <div className="flex flex-row gap-4 mt-6 mb-8">
+        <motion.button
+          whileTap={{ scale: 0.96 }}
+          onClick={scanStatus === 'scanning' ? stopScanning : startScanner}
+          className={`w-44 h-14 rounded-full font-medium text-white shadow transition-colors ${
+        scanStatus === 'scanning' ? 'bg-red-500 hover:bg-red-600' : 'bg-red-500 hover:bg-red-600'
+          }`}
+        >
+          {scanStatus === 'scanning' ? 'Stop' : 'Scan'}
+        </motion.button>
+
+        
+        <button
+          className="w-44 h-14 rounded-full font-medium bg-red-500 text-white shadow transition-colors hover:bg-red-600"
+          onClick={() => setManualInputOpen(true)}
+        >
+          Enter Barcode
+        </button>
+      </div>
+
+      
+      {manualInputOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <form
+            onSubmit={handleManualSubmit}
+            className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center gap-4 w-80 max-w-full"
+          >
+            <div className="text-lg font-semibold mb-2">Enter Barcode</div>
+            <input
+              type="text"
+              value={manualBarcode}
+              onChange={e => setManualBarcode(e.target.value)}
+              className="border border-gray-300 rounded px-3 py-2 w-full text-center focus:outline-none focus:ring-2 focus:ring-red-400"
+              placeholder="Enter barcode number"
+              autoFocus
+            />
+            <div className="flex gap-2 w-full">
+              <button
+                type="button"
+                className="flex-1 py-2 rounded bg-gray-200 text-gray-700 font-medium hover:bg-gray-300"
+                onClick={() => setManualInputOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="flex-1 py-2 rounded bg-red-500 text-white font-medium hover:bg-red-600"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       <div ref={productRef} className="w-full">
         {scanResult && (
@@ -152,7 +209,7 @@ const BarcodeScanner = () => {
                 <p className="text-sm text-gray-500">${product.price.toFixed(2)}</p>
               </motion.div>
 
-              {/* ✅ Recommendations show below the scanned product */}
+              
               {showRecommendations && (
                 <div className="mt-6 w-full overflow-x-auto px-1">
                   <Rec_product />
