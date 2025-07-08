@@ -115,7 +115,7 @@ const BarcodeScanner = () => {
   const handleManualSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (manualBarcode.trim()) {
-      setManualInputOpen(false);
+      // setManualInputOpen(false);
       setScanResult(manualBarcode);
       await fetchProductDetails(manualBarcode);
       setManualBarcode("");
